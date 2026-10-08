@@ -81,7 +81,8 @@
         .welcome-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 100%; margin-bottom: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
         .welcome-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
+        /* MENU INFERIOR OCULTO POR PADRÃO NA TELA DE BOAS-VINDAS */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--card-bg); border-top: 1px solid var(--border); display: none; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; padding: 8px 16px; user-select: none; }
         .nav-item.active { color: var(--btn-primary); }
         .nav-icon { font-size: 1.15rem; }
@@ -410,12 +411,19 @@
                 adminBox.style.display = (role === 'developer') ? 'block' : 'none';
             }
 
+            // EXIBE O MENU INFERIOR APÓS ESCOLHER A VERSÃO
+            document.getElementById('bottom-nav').style.display = 'flex';
+
             navTo('dashboard', document.getElementById('nav-dashboard'));
         }
 
         function backToWelcome() {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('screen-welcome').classList.add('active');
+            // OCULTA O MENU INFERIOR AO RETORNAR À TELA DE BOAS-VINDAS
+            document.getElementById('bottom-nav').style.display = 'none';
+            // FECHA O CHAT SE ESTIVER ABERTO
+            document.getElementById('chat-window').style.display = 'none';
         }
 
         function navTo(targetId, el) {
