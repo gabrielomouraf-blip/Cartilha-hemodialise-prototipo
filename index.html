@@ -24,9 +24,9 @@
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         
-        .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); height: 100vh; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 100px; }
 
-        .screen { display: none; height: 100%; flex-direction: column; overflow-y: auto; padding-bottom: 90px; }
+        .screen { display: none; flex-direction: column; width: 100%; }
         .screen.active { display: flex; }
 
         header { padding: 24px 24px 12px 24px; flex-shrink: 0; }
@@ -75,13 +75,14 @@
 
         .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 16px; border-radius: 14px; margin-bottom: 20px; }
 
-        .bottom-nav { position: absolute; bottom: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 10; box-shadow: 0 -4px 12px rgba(0,0,0,0.03); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
+        /* MENU INFERIOR FIXO COM Z-INDEX SEGURO PARA CLIQUES */
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 16px 0; z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; padding: 4px 12px; }
         .nav-item.active { color: var(--btn-primary); }
         .nav-icon { font-size: 1.2rem; }
 
-        .chat-fab { position: absolute; bottom: 80px; right: 20px; width: 56px; height: 56px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 20; }
-        .chat-window { position: absolute; bottom: 140px; right: 20px; width: calc(100% - 40px); background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 20; overflow: hidden; }
+        .chat-fab { position: fixed; bottom: 85px; right: max(calc(50% - 220px), 16px); width: 50px; height: 50px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 1001; }
+        .chat-window { position: fixed; bottom: 145px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 1002; overflow: hidden; }
         .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; }
         .chat-body { height: 250px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg-body); }
         .msg { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 85%; }
@@ -91,8 +92,8 @@
         .chat-input-area input { flex: 1; border: none; padding: 12px 16px; outline: none; font-size: 0.85rem; }
         .chat-input-area button { background: none; border: none; padding: 0 16px; color: var(--btn-primary); font-weight: bold; cursor: pointer; }
 
-        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 50; display: none; justify-content: center; align-items: center; padding: 24px; }
-        .sos-card { background: white; border-radius: 20px; padding: 24px; width: 100%; text-align: center; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 2000; display: none; justify-content: center; align-items: center; padding: 24px; }
+        .sos-card { background: white; border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; text-align: center; }
         .sos-card h2 { color: var(--danger); margin-top: 0; }
         .sos-steps { text-align: left; margin: 20px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
         .btn-close-sos { background: #e2e8f0; padding: 12px; border-radius: 10px; border: none; width: 100%; font-weight: bold; cursor: pointer; }
@@ -245,7 +246,7 @@
             </div>
         </div>
 
-        <!-- MENU INFERIOR ORIGINAL -->
+        <!-- MENU INFERIOR FIXO E TOTALMENTE CLICÁVEL -->
         <div class="bottom-nav" id="bottom-nav">
             <div class="nav-item active" onclick="navTo('dashboard', this)">
                 <div class="nav-icon">🏠</div>
@@ -271,4 +272,104 @@
             <div class="chat-body" id="chat-body">
                 <div class="msg msg-bot">Olá! Sou seu assistente virtual do HemoHealth. Dúvidas sobre dormir, hematomas ou higiene? Digite abaixo.</div>
             </div>
-            <div class
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Escreva sua dúvida...">
+                <button onclick="sendMsg()">Enviar</button>
+            </div>
+        </div>
+
+        <!-- MODAL SOS -->
+        <div class="modal-overlay" id="modal-sos">
+            <div class="sos-card">
+                <h2>⚠️ SANGRAMENTO ATIVO</h2>
+                <p>Se a sua fístula rompeu ou sangra muito após a diálise, aja rápido:</p>
+                <div class="sos-steps">
+                    1. Pegue gazes limpas ou um pano limpo.<br><br>
+                    2. Pressione o local FIRMEMENTE de forma contínua por 15 minutos (sem espiar).<br><br>
+                    3. Mantenha o braço elevado (acima do nível do coração).
+                </div>
+                <button class="sos-btn" style="margin-bottom:10px;" onclick="alert('Simulando ligação para a clínica local.')">📞 LIGAR EMERGÊNCIA</button>
+                <button class="btn-close-sos" onclick="closeSOS()">Já controlei a situação</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let modulesData = {
+            maturacao: {
+                title: "1. Período de Maturação",
+                desc: "Após a confecção cirúrgica, a fístula arteriovenosa requer repouso inicial e posterior estímulo com exercícios de compressão manual para promover a dilatação venosa adequada antes das primeiras punções.",
+                videos: [
+                    { title: "Técnica correta dos exercícios de maturação", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+                ]
+            },
+            diarios: {
+                title: "2. Autocuidado Diário",
+                desc: "O autocuidado no domicílio envolve a higienização rigorosa com água e sabão neutro, além da palpação diária para checar o frêmito (vibração característica que atesta o fluxo livre de sangue).",
+                videos: [
+                    { title: "Como higienizar e palpar o frêmito corretamente", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+                ]
+            },
+            proibido: {
+                title: "3. O que NUNCA fazer",
+                desc: "O membro portador da fístula deve ser preservado a todo custo. É terminantemente proibido aferir pressão arterial, coletar exames de sangue, administrar medicamentos ou utilizar roupas e relógios apertados nele.",
+                videos: []
+            },
+            alertas: {
+                title: "4. Sinais de Alerta",
+                desc: "Saber reconhecer sinais flogísticos (calor, vermelhidão, dor intensa), ausência súbita de frêmito ou inchaços anômalos permite buscar atendimento médico imediato, evitando a trombose e a perda do acesso.",
+                videos: []
+            }
+        };
+
+        let currentActiveTopic = null;
+        let xp = 0;
+        let water = 0;
+        let vitalsHistory = [];
+        let photos = [];
+
+        const todayStr = new Date().toDateString();
+        const lastSavedDate = localStorage.getItem('hh_date') || todayStr;
+
+        try {
+            xp = parseInt(localStorage.getItem('hh_xp')) || 0;
+            
+            if(lastSavedDate !== todayStr) {
+                const oldWater = localStorage.getItem('hh_water') || '0';
+                let autoLog = JSON.parse(localStorage.getItem('hh_vitals')) || [];
+                autoLog.unshift({
+                    date: "Balanço Fechado (" + lastSavedDate + ")",
+                    text: "Total ingerido: " + oldWater + " mL"
+                });
+                localStorage.setItem('hh_vitals', JSON.stringify(autoLog));
+                
+                water = 0;
+                localStorage.setItem('hh_water', 0);
+                localStorage.setItem('hh_date', todayStr);
+            } else {
+                water = parseInt(localStorage.getItem('hh_water')) || 0;
+            }
+
+            vitalsHistory = JSON.parse(localStorage.getItem('hh_vitals')) || [];
+            photos = JSON.parse(localStorage.getItem('hh_photos')) || [];
+            
+            const savedMods = localStorage.getItem('hh_modules_data');
+            if(savedMods) {
+                modulesData = JSON.parse(savedMods);
+            }
+        } catch(e) {}
+
+        updateUI();
+
+        function navTo(targetId, el) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-' + targetId).classList.add('active');
+            
+            if(el) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                el.classList.add('active');
+            }
+        }
+
+        function openTopic(key) {
+            currentActiveTopic = key;
