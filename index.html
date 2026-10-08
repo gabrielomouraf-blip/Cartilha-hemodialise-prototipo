@@ -76,20 +76,16 @@
         .video-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0; }
 
         .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 14px; border-radius: 14px; margin-bottom: 16px; display: none; }
-        .developer-only { display: none; }
 
-        /* TELA DE BOAS-VINDAS / SELEÇÃO DE PERFIL */
         .welcome-container { padding: 30px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
         .welcome-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 100%; margin-bottom: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
         .welcome-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
-        /* MENU INFERIOR FIXO */
         .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; padding: 8px 16px; user-select: none; }
         .nav-item.active { color: var(--btn-primary); }
         .nav-icon { font-size: 1.15rem; }
 
-        /* CHATBOT */
         .chat-fab { position: absolute; bottom: 80px; right: 16px; width: 46px; height: 46px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 110; }
         .chat-window { position: absolute; bottom: 136px; left: 16px; right: 16px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 120; overflow: hidden; }
         .chat-header { background: var(--dark-card); color: white; padding: 10px 14px; font-weight: 600; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
@@ -269,12 +265,17 @@
                     <p id="topic-desc" style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin: 0;"></p>
                 </div>
 
-                <!-- PAINEL DE ADMIN EXCLUSIVO PARA DESENVOLVEDOR -->
                 <div class="admin-box" id="admin-video-box">
                     <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula (Admin)</h4>
                     <input type="text" id="new-vid-title" class="input-box" placeholder="Título da aula (ex: Cuidados pós-punção)" style="margin-bottom:8px; width:100%;">
                     <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube (ex: https://youtube.com/watch?v=...)" style="margin-bottom:8px; width:100%;">
-                    <button class="btn-submit" onclick="addNewVideo()">Salvar e Exibir Vídeo</button>
+                    <button class="btn-submit" onclick="addNewVideo()" style="margin-bottom: 14px;">Salvar e Exibir Vídeo</button>
+                    
+                    <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">🔄 Sincronizar com o Telemóvel</h4>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-action" style="background:white; font-size:0.75rem;" onclick="exportData()">📤 Exportar Dados</button>
+                        <button class="btn-action" style="background:white; font-size:0.75rem;" onclick="importData()">📥 Importar Dados</button>
+                    </div>
                 </div>
 
                 <div class="section-title">Videoaulas Explicativas</div>
@@ -335,16 +336,12 @@
             maturacao: {
                 title: "1. Período de Maturação",
                 desc: "Após a confecção cirúrgica, a fístula arteriovenosa requer repouso inicial e posterior estímulo com exercícios de compressão manual para promover a dilatação venosa adequada antes das primeiras punções.",
-                videos: [
-                    { title: "Técnica correta dos exercícios de maturação", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
-                ]
+                videos: []
             },
             diarios: {
                 title: "2. Autocuidado Diário",
                 desc: "O autocuidado no domicílio envolve a higienização rigorosa com água e sabão neutro, além da palpação diária para checar o frêmito (vibração característica que atesta o fluxo livre de sangue).",
-                videos: [
-                    { title: "Como higienizar e palpar o frêmito corretamente", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
-                ]
+                videos: []
             },
             proibido: {
                 title: "3. O que NUNCA fazer",
@@ -359,7 +356,7 @@
         };
 
         let currentActiveTopic = null;
-        let userRole = 'patient'; // 'patient' ou 'developer'
+        let userRole = 'patient'; 
         let xp = 0;
         let water = 0;
         let vitalsHistory = [];
@@ -398,7 +395,6 @@
 
         updateUI();
 
-        // CONTROLO DE PERFIS (PACIENTE X DESENVOLVEDOR)
         function selectRole(role) {
             userRole = role;
             const badgeTexts = {
@@ -409,7 +405,6 @@
                 el.innerText = badgeTexts[role];
             });
 
-            // Exibir ou ocultar ferramentas de admin
             const adminBox = document.getElementById('admin-video-box');
             if(adminBox) {
                 adminBox.style.display = (role === 'developer') ? 'block' : 'none';
@@ -440,7 +435,6 @@
             document.getElementById('topic-title').innerText = data.title;
             document.getElementById('topic-desc').innerText = data.desc;
             
-            // Garantir visibilidade do painel admin de acordo com o cargo
             const adminBox = document.getElementById('admin-video-box');
             if(adminBox) {
                 adminBox.style.display = (userRole === 'developer') ? 'block' : 'none';
@@ -528,6 +522,31 @@
             urlInput.value = '';
             renderVideos();
             alert('Videoaula adicionada com sucesso!');
+        }
+
+        function exportData() {
+            if(userRole !== 'developer') return alert('Acesso restrito a administradores.');
+            const dataStr = JSON.stringify(modulesData);
+            navigator.clipboard.writeText(dataStr).then(() => {
+                alert('Dados copiados para a área de transferência! Cole na opção "Importar" no telemóvel.');
+            }).catch(err => {
+                prompt('Copie o código abaixo manualmente:', dataStr);
+            });
+        }
+
+        function importData() {
+            if(userRole !== 'developer') return alert('Acesso restrito a administradores.');
+            const dataStr = prompt('Cole aqui o código de dados copiado do PC:');
+            if(!dataStr) return;
+            try {
+                const parsed = JSON.parse(dataStr);
+                modulesData = parsed;
+                localStorage.setItem('hh_modules_data', JSON.stringify(modulesData));
+                renderVideos();
+                alert('Dados importados com sucesso! O vídeo agora está sincronizado no telemóvel.');
+            } catch(e) {
+                alert('Código inválido. Verifique se copiou corretamente.');
+            }
         }
 
         function backToModules() {
