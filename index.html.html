@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cartilha Digital: Acesso Vascular em Hemodiálise</title>
+    <title>Cartilha Digital Interativa - FAV</title>
     <style>
         :root {
             --primary: #0284c7;
@@ -12,6 +12,7 @@
             --card-bg: #ffffff;
             --text: #1e293b;
             --text-light: #64748b;
+            --accent: #0ea5e9;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -24,7 +25,7 @@
         }
         .container {
             width: 100%;
-            max-width: 480px; /* Simula a tela de um smartphone */
+            max-width: 480px;
             background-color: var(--card-bg);
             min-height: 100vh;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -34,79 +35,155 @@
         header {
             background-color: var(--primary);
             color: white;
-            padding: 24px 20px;
+            padding: 20px;
             text-align: center;
+            position: relative;
         }
         header h1 {
-            font-size: 1.25rem;
-            margin: 0 0 8px 0;
+            font-size: 1.15rem;
+            margin: 0 0 4px 0;
         }
         header p {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             margin: 0;
             opacity: 0.9;
+        }
+        .back-btn {
+            position: absolute;
+            left: 15px;
+            top: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-weight: bold;
         }
         .content {
             padding: 20px;
             flex: 1;
             overflow-y: auto;
         }
-        .intro-card {
-            background-color: #e0f2fe;
-            border-left: 4px solid var(--primary);
-            padding: 14px;
-            border-radius: 6px;
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            line-height: 1.4;
-        }
-        details {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-        }
-        summary {
-            padding: 16px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            background-color: #fff;
-            outline: none;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        summary::-webkit-details-marker {
+        .screen {
             display: none;
         }
-        summary::after {
-            content: '+';
-            font-size: 1.2rem;
+        .screen.active {
+            display: block;
+        }
+        /* Menu Cards */
+        .menu-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .menu-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        .menu-card h3 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text);
+        }
+        .menu-card span {
             color: var(--primary);
+            font-size: 1.2rem;
+            font-weight: bold;
         }
-        details[open] summary::after {
-            content: '-';
-        }
-        .details-body {
-            padding: 0 16px 16px 16px;
+        /* Topic Detail Styles */
+        .topic-text {
             font-size: 0.9rem;
             color: var(--text-light);
             line-height: 1.5;
-            border-top: 1px solid #f1f5f9;
+            margin-bottom: 20px;
         }
-        .details-body ul {
+        .topic-text ul {
             padding-left: 18px;
-            margin: 8px 0 0 0;
+            margin: 10px 0;
         }
-        .details-body li {
+        .topic-text li {
             margin-bottom: 6px;
+        }
+        /* Video Container */
+        .video-container {
+            margin-top: 20px;
+        }
+        .video-box {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            text-align: center;
+            position: relative;
+        }
+        .video-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* Admin Panel Toggle & Form */
+        .admin-toggle {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .admin-toggle button {
+            background: #e2e8f0;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+        .admin-panel {
+            background: #f1f5f9;
+            border: 1px dashed #cbd5e1;
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        .admin-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 0.85rem;
+            color: var(--primary-dark);
+        }
+        .admin-panel input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            box-sizing: border-box;
+        }
+        .admin-panel button.add-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            width: 100%;
         }
         footer {
             text-align: center;
-            padding: 16px;
+            padding: 14px;
             font-size: 0.75rem;
             color: var(--text-light);
             border-top: 1px solid #f1f5f9;
@@ -116,61 +193,179 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1>Cuidados com o Acesso Vascular</h1>
-            <p>Guia Prático para Pacientes em Hemodiálise</p>
+        <header id="main-header">
+            <button class="back-btn" id="btn-back" style="display: none;" onclick="goHome()">← Voltar</button>
+            <h1 id="header-title">Cartilha Digital: Acesso Vascular</h1>
+            <p id="header-subtitle">Rede de Hospitais Universitários</p>
         </header>
 
         <div class="content">
-            <div class="intro-card">
-                <strong>Protótipo Funcional (DSR):</strong> Esta tecnologia educacional digital interativa foi concebida para auxiliar no autocuidado e na preservação da fístula arteriovenosa (FAV).
+            <!-- ECRÃ INICIAL (HOME) -->
+            <div id="screen-home" class="screen active">
+                <div style="background-color: #e0f2fe; border-left: 4px solid var(--primary); padding: 12px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.4;">
+                    <strong>Protótipo Interativo (DSR):</strong> Selecione abaixo um dos módulos de orientação para visualizar o conteúdo e os vídeos explicativos.
+                </div>
+
+                <div class="menu-card" onclick="openTopic('maturacao')">
+                    <h3>1. Cuidados no Período de Maturação</h3>
+                    <span>›</span>
+                </div>
+                <div class="menu-card" onclick="openTopic('diarios')">
+                    <h3>2. Cuidados Domiciliares Diários</h3>
+                    <span>›</span>
+                </div>
+                <div class="menu-card" onclick="openTopic('proibido')">
+                    <h3>3. O que NUNCA fazer no braço da FAV</h3>
+                    <span>›</span>
+                </div>
+                <div class="menu-card" onclick="openTopic('alertas')">
+                    <h3>4. Sinais de Alerta e Intercorrências</h3>
+                    <span>›</span>
+                </div>
             </div>
 
-            <details>
-                <summary>1. O que é a Fístula Arteriovenosa (FAV)?</summary>
-                <div class="details-body">
-                    <p>É a ligação cirúrgica entre uma artéria e uma veia, considerada o "padrão-ouro" de acesso vascular por garantir melhor fluxo sanguíneo e maior longevidade ao tratamento.</p>
-                </div>
-            </details>
+            <!-- ECRÃ DE CONTEÚDO DOS TÓPICOS -->
+            <div id="screen-topic" class="screen">
+                <h2 id="topic-title" style="font-size: 1.1rem; color: var(--primary-dark); margin-top: 0;"></h2>
+                <div class="topic-text" id="topic-description"></div>
 
-            <details>
-                <summary>2. Cuidados no Período de Maturação</summary>
-                <div class="details-body">
-                    <ul>
-                        <li>Realizar exercícios diários com objeto macio (bolinha) conforme orientação.</li>
-                        <li>Evitar carregar peso excessivo com o membro da fístula.</li>
-                        <li>Verificar diariamente a presença de frêmito (vibração) no local.</li>
-                    </ul>
+                <h3 style="font-size: 0.9rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 6px; margin-top: 20px;">Vídeos Explicativos</h3>
+                <div class="video-container" id="video-list">
+                    <!-- Os vídeos adicionados pelo administrador aparecem aqui dinamicamente -->
                 </div>
-            </details>
 
-            <details>
-                <summary>3. O que NUNCA fazer no braço da FAV</summary>
-                <div class="details-body">
-                    <ul>
-                        <li><strong>Não</strong> aferir pressão arterial no braço da fístula.</li>
-                        <li><strong>Não</strong> coletar sangue nem administrar medicamentos nesse braço.</li>
-                        <li><strong>Não</strong> usar roupas apertadas, relógios ou pulseiras restritivas.</li>
-                    </ul>
+                <!-- PAINEL DE ADMINISTRADOR -->
+                <div class="admin-toggle">
+                    <button onclick="toggleAdmin()">⚙️ Modo Administrador (Adicionar Vídeo)</button>
                 </div>
-            </details>
 
-            <details>
-                <summary>4. Sinais de Alerta (Quando procurar ajuda)</summary>
-                <div class="details-body">
-                    <ul>
-                        <li>Ausência de frêmito ou pulsação.</li>
-                        <li>Sinais flogísticos: vermelhidão intensa, calor local ou dor exacerbada.</li>
-                        <li>Sangramentos persistentes após as sessões de hemodiálise.</li>
-                    </ul>
+                <div class="admin-panel" id="admin-panel">
+                    <h4>Adicionar Novo Vídeo a este Tópico</h4>
+                    <input type="text" id="vid-title" placeholder="Título do Vídeo (ex: Como fazer os exercícios)">
+                    <input type="text" id="vid-url" placeholder="Link de incorporação do YouTube (ex: https://www.youtube.com/embed/...)">
+                    <button class="add-btn" onclick="addVideo()">Publicar Vídeo</button>
                 </div>
-            </details>
+            </div>
         </div>
 
         <footer>
-            Projeto de Iniciação Tecnológica • Rede de Hospitais Universitários
+            Iniciação Tecnológica • Saúde Digital
         </footer>
     </div>
 
+    <script>
+        // Dados de exemplo para cada módulo
+        const topicsData = {
+            maturacao: {
+                title: "1. Cuidados no Período de Maturação",
+                desc: "Após a confeção cirúrgica da fístula arteriovenosa (FAV), o acesso precisa de tempo e estímulo para dilatar e amadurecer adequadamente antes de poder ser puncionado.",
+                videos: [
+                    { title: "Como realizar os exercícios com a bolinha", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+                ]
+            },
+            diarios: {
+                title: "2. Cuidados Domiciliares Diários",
+                desc: "A manutenção da higiene e a monitorização constante do fluxo sanguíneo garantem a durabilidade do acesso e previnem complicações infecciosas.",
+                videos: [
+                    { title: "Higiene correta e palpação do frêmito", url: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+                ]
+            },
+            proibido: {
+                title: "3. O que NUNCA fazer no braço da FAV",
+                desc: "Determinadas ações comprometem de forma irreversível a circulação e a integridade da rede venosa do membro escolhido.",
+                videos: []
+            },
+            alertas: {
+                title: "4. Sinais de Alerta e Intercorrências",
+                desc: "Saber identificar precocemente alterações como perda do frêmito ou sinais de hemorragia permite uma intervenção médica imediata.",
+                videos: []
+            }
+        };
+
+        let currentTopicKey = '';
+
+        function openTopic(key) {
+            currentTopicKey = key;
+            const data = topicsData[key];
+            
+            document.getElementById('topic-title').innerText = data.title;
+            document.getElementById('topic-description').innerText = data.desc;
+            
+            renderVideos();
+
+            // Alternar ecrãs
+            document.getElementById('screen-home').classList.remove('active');
+            document.getElementById('screen-topic').classList.add('active');
+            
+            // Ajustar cabeçalho
+            document.getElementById('btn-back').style.display = 'block';
+            document.getElementById('header-title').innerText = "Módulo Educativo";
+            document.getElementById('header-subtitle').innerText = "Detalhes e Vídeos";
+            
+            // Ocultar painel de admin ao mudar de página
+            document.getElementById('admin-panel').style.display = 'none';
+        }
+
+        function goHome() {
+            document.getElementById('screen-topic').classList.remove('active');
+            document.getElementById('screen-home').classList.add('active');
+            
+            document.getElementById('btn-back').style.display = 'none';
+            document.getElementById('header-title').innerText = "Cartilha Digital: Acesso Vascular";
+            document.getElementById('header-subtitle').innerText = "Rede de Hospitais Universitários";
+        }
+
+        function renderVideos() {
+            const listEl = document.getElementById('video-list');
+            listEl.innerHTML = '';
+            
+            const videos = topicsData[currentTopicKey].videos;
+            
+            if (videos.length === 0) {
+                listEl.innerHTML = '<p style="font-size:0.8rem; color:var(--text-light); text-align:center;">Nenhum vídeo adicionado neste módulo ainda.</p>';
+                return;
+            }
+
+            videos.forEach(vid => {
+                listEl.innerHTML += `
+                    <div style="margin-bottom:15px;">
+                        <div class="video-box">
+                            <iframe src="${vid.url}" allowfullscreen></iframe>
+                        </div>
+                        <p style="font-size:0.8rem; font-weight:600; margin:4px 0 0 0; color:var(--text);">${vid.title}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function toggleAdmin() {
+            const panel = document.getElementById('admin-panel');
+            panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function addVideo() {
+            const titleInput = document.getElementById('vid-title');
+            const urlInput = document.getElementById('vid-url');
+
+            if (!titleInput.value || !urlInput.value) {
+                alert('Por favor, preencha o título e o link do vídeo.');
+                return;
+            }
+
+            // Adicionar à lista do tópico atual
+            topicsData[currentTopicKey].videos.push({
+                title: titleInput.value,
+                url: urlInput.value
+            });
+
+            // Limpar campos e atualizar visualização
+            titleInput.value = '';
+            urlInput.value = '';
+            document.getElementById('admin-panel').style.display = 'none';
+            
+            renderVideos();
+            alert('Vídeo adicionado com sucesso ao protótipo!');
+        }
+    </script>
 </body>
 </html>
