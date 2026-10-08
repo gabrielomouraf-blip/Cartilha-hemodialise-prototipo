@@ -29,9 +29,11 @@
         .screen { display: none; flex-direction: column; height: 100%; width: 100%; flex: 1; overflow: hidden; background-color: var(--bg-body); }
         .screen.active { display: flex; }
 
-        header { padding: 20px 24px 10px 24px; flex-shrink: 0; background: var(--bg-body); }
+        header { padding: 20px 24px 10px 24px; flex-shrink: 0; background: var(--bg-body); display: flex; justify-content: space-between; align-items: flex-start; }
         header h1 { font-size: 1.35rem; font-weight: 700; margin: 0 0 2px 0; color: var(--text-main); }
         header p { font-size: 0.8rem; margin: 0; color: var(--text-muted); }
+        
+        .role-badge { font-size: 0.7rem; background: #e0f2fe; color: var(--btn-primary); padding: 4px 8px; border-radius: 6px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); }
 
         .content-scroll { padding: 0 24px 100px 24px; flex: 1; overflow-y: auto; }
 
@@ -73,7 +75,13 @@
         .video-wrapper iframe { width: 100%; height: 100%; border: none; }
         .video-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0; }
 
-        .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 14px; border-radius: 14px; margin-bottom: 16px; }
+        .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 14px; border-radius: 14px; margin-bottom: 16px; display: none; }
+        .developer-only { display: none; }
+
+        /* TELA DE BOAS-VINDAS / SELEÇÃO DE PERFIL */
+        .welcome-container { padding: 30px 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; text-align: center; }
+        .welcome-card { background: white; border: 1px solid var(--border); border-radius: 20px; padding: 24px; width: 100%; margin-bottom: 16px; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; box-shadow: var(--shadow-sm); }
+        .welcome-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
 
         /* MENU INFERIOR FIXO */
         .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
@@ -102,13 +110,34 @@
 </head>
 <body>
 
-    <div class="app-container">
+    <div class="app-container" id="app-root">
         
+        <!-- TELA DE BOAS-VINDAS / SELEÇÃO DE PERFIL -->
+        <div id="screen-welcome" class="screen active">
+            <div class="welcome-container">
+                <h1 style="font-size: 1.8rem; color: var(--dark-card); margin-bottom: 6px;">HemoHealth</h1>
+                <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Sistema de Gestão e Autocuidado para Acesso Vascular</p>
+                
+                <div class="welcome-card" onclick="selectRole('patient')">
+                    <h3 style="margin: 0 0 6px 0; color: var(--btn-primary);">👤 Versão Paciente</h3>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Acesso aos módulos de ensino, diário clínico e controle hídrico diário.</p>
+                </div>
+
+                <div class="welcome-card" onclick="selectRole('developer')">
+                    <h3 style="margin: 0 0 6px 0; color: var(--dark-card);">🛠️ Versão Desenvolvedor / Admin</h3>
+                    <p style="margin: 0; font-size: 0.8rem; color: var(--text-muted);">Permissões totais para gerir conteúdos, inserir e excluir videoaulas.</p>
+                </div>
+            </div>
+        </div>
+
         <!-- DASHBOARD (INÍCIO) -->
-        <div id="screen-dashboard" class="screen active">
+        <div id="screen-dashboard" class="screen">
             <header>
-                <h1>HemoHealth</h1>
-                <p>Resumo Diário • Acompanhamento do Autocuidado</p>
+                <div>
+                    <h1>HemoHealth</h1>
+                    <p>Resumo Diário • Autocuidado da FAV</p>
+                </div>
+                <div class="role-badge" id="role-display-badge" onclick="backToWelcome()">Modo: Paciente</div>
             </header>
             <div class="content-scroll">
                 <button class="sos-btn" onclick="openSOS()">⚠️ EMERGÊNCIA (Sangramento)</button>
@@ -147,8 +176,11 @@
         <!-- DIÁRIO CLÍNICO -->
         <div id="screen-clinico" class="screen">
             <header>
-                <h1>Dados Clínicos</h1>
-                <p>Histórico unificado para sua equipe médica</p>
+                <div>
+                    <h1>Dados Clínicos</h1>
+                    <p>Histórico unificado para equipe médica</p>
+                </div>
+                <div class="role-badge" onclick="backToWelcome()">Mudar Modo</div>
             </header>
             <div class="content-scroll">
                 
@@ -185,8 +217,11 @@
         <!-- MÓDULOS DE ENSINO -->
         <div id="screen-modulos" class="screen">
             <header>
-                <h1>Módulos de Ensino</h1>
-                <p>Orientações validadas clinicamente</p>
+                <div>
+                    <h1>Módulos de Ensino</h1>
+                    <p>Orientações validadas clinicamente</p>
+                </div>
+                <div class="role-badge" onclick="backToWelcome()">Mudar Modo</div>
             </header>
             <div class="content-scroll">
                 <div class="card module-card" onclick="openTopic('maturacao')">
@@ -224,16 +259,19 @@
         <div id="screen-topic-detail" class="screen">
             <header>
                 <button class="back-sub-btn" onclick="backToModules()"><span>←</span> Voltar aos Módulos</button>
-                <h1 id="topic-title">Título do Módulo</h1>
-                <p>Conteúdo Educacional</p>
+                <div>
+                    <h1 id="topic-title">Título do Módulo</h1>
+                    <p>Conteúdo Educacional</p>
+                </div>
             </header>
             <div class="content-scroll">
                 <div class="card">
                     <p id="topic-desc" style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin: 0;"></p>
                 </div>
 
-                <div class="admin-box">
-                    <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula</h4>
+                <!-- PAINEL DE ADMIN EXCLUSIVO PARA DESENVOLVEDOR -->
+                <div class="admin-box" id="admin-video-box">
+                    <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula (Admin)</h4>
                     <input type="text" id="new-vid-title" class="input-box" placeholder="Título da aula (ex: Cuidados pós-punção)" style="margin-bottom:8px; width:100%;">
                     <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube (ex: https://youtube.com/watch?v=...)" style="margin-bottom:8px; width:100%;">
                     <button class="btn-submit" onclick="addNewVideo()">Salvar e Exibir Vídeo</button>
@@ -321,6 +359,7 @@
         };
 
         let currentActiveTopic = null;
+        let userRole = 'patient'; // 'patient' ou 'developer'
         let xp = 0;
         let water = 0;
         let vitalsHistory = [];
@@ -359,6 +398,31 @@
 
         updateUI();
 
+        // CONTROLO DE PERFIS (PACIENTE X DESENVOLVEDOR)
+        function selectRole(role) {
+            userRole = role;
+            const badgeTexts = {
+                'patient': 'Modo: Paciente',
+                'developer': 'Modo: 🛠️ Admin / Dev'
+            };
+            document.querySelectorAll('#role-display-badge').forEach(el => {
+                el.innerText = badgeTexts[role];
+            });
+
+            // Exibir ou ocultar ferramentas de admin
+            const adminBox = document.getElementById('admin-video-box');
+            if(adminBox) {
+                adminBox.style.display = (role === 'developer') ? 'block' : 'none';
+            }
+
+            navTo('dashboard', document.getElementById('nav-dashboard'));
+        }
+
+        function backToWelcome() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-welcome').classList.add('active');
+        }
+
         function navTo(targetId, el) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             const target = document.getElementById('screen-' + targetId);
@@ -375,13 +439,19 @@
 
             document.getElementById('topic-title').innerText = data.title;
             document.getElementById('topic-desc').innerText = data.desc;
+            
+            // Garantir visibilidade do painel admin de acordo com o cargo
+            const adminBox = document.getElementById('admin-video-box');
+            if(adminBox) {
+                adminBox.style.display = (userRole === 'developer') ? 'block' : 'none';
+            }
+
             renderVideos();
 
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById('screen-topic-detail').classList.add('active');
         }
 
-        // CONVERSOR AUTOMÁTICO DE URL DO YOUTUBE PARA EVITAR "CONEXÃO RECUSADA"
         function convertYouTubeUrl(url) {
             if (!url) return '';
             if (url.includes('/embed/')) return url;
@@ -403,19 +473,23 @@
                 vidContainer.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma videoaula cadastrada neste módulo ainda.</p>';
             } else {
                 data.videos.forEach((v, index) => {
+                    let deleteButtonHtml = (userRole === 'developer') 
+                        ? `<button onclick="deleteVideo(${index})" style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">🗑️ Excluir</button>`
+                        : '';
+
                     vidContainer.innerHTML += `
                         <div class="video-wrapper"><iframe src="${v.url}" allowfullscreen></iframe></div>
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                             <div class="video-title">${v.title}</div>
-                            <button onclick="deleteVideo(${index})" style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">🗑️ Excluir</button>
+                            ${deleteButtonHtml}
                         </div>
                     `;
                 });
             }
         }
 
-        // FUNÇÃO PARA EXCLUIR VÍDEOS INDESEJADOS
         function deleteVideo(index) {
+            if(userRole !== 'developer') return alert('Acesso restrito a desenvolvedores/administradores.');
             if(confirm('Deseja realmente remover esta videoaula?')) {
                 modulesData[currentActiveTopic].videos.splice(index, 1);
                 try {
@@ -426,6 +500,7 @@
         }
 
         function addNewVideo() {
+            if(userRole !== 'developer') return alert('Acesso restrito a desenvolvedores/administradores.');
             const titleInput = document.getElementById('new-vid-title');
             const urlInput = document.getElementById('new-vid-url');
             
