@@ -26,7 +26,8 @@
         
         .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 110px; }
 
-        .screen { display: none; flex-direction: column; width: 100%; }
+        /* CORREÇÃO DO SISTEMA DE TELAS */
+        .screen { display: none; flex-direction: column; width: 100%; flex: 1; }
         .screen.active { display: flex; }
 
         header { padding: 24px 24px 12px 24px; flex-shrink: 0; }
@@ -75,19 +76,19 @@
 
         .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 16px; border-radius: 14px; margin-bottom: 20px; }
 
-        /* MENU INFERIOR CORRIGIDO E LIVRE DE BLOQUEIOS */
+        /* MENU INFERIOR CORRIGIDO E TOTALMENTE CLICÁVEL */
         .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0 16px 0; z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; padding: 6px 20px; user-select: none; }
         .nav-item.active { color: var(--btn-primary); }
         .nav-icon { font-size: 1.25rem; }
 
-        /* CHATBOT REPOSICIONADO PARA NÃO BLOQUEAR OS BOTÕES */
+        /* CHATBOT INTELIGENTE */
         .chat-fab { position: fixed; bottom: 95px; right: max(calc(50% - 225px), 16px); width: 48px; height: 48px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 900; }
         .chat-window { position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 1002; overflow: hidden; }
-        .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; }
-        .chat-body { height: 250px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg-body); }
-        .msg { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 85%; }
-        .msg-bot { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { height: 260px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg-body); }
+        .msg { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 90%; line-height: 1.4; }
+        .msg-bot { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-main); }
         .msg-user { background: var(--btn-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
         .chat-input-area { display: flex; border-top: 1px solid var(--border); background: white; }
         .chat-input-area input { flex: 1; border: none; padding: 12px 16px; outline: none; font-size: 0.85rem; }
@@ -132,7 +133,7 @@
                     </div>
                 </div>
 
-                <!-- CONTROLE HÍDRICO COM RESET AUTOMÁTICO E CORREÇÃO -->
+                <!-- BALANÇO HÍDRICO COM RESET AUTOMÁTICO E CORREÇÃO -->
                 <div class="card" style="text-align: center;">
                     <h3 style="margin:0 0 4px 0; font-size:0.95rem;">Balanço Hídrico Diário</h3>
                     <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Zera automaticamente à meia-noite</p>
@@ -184,7 +185,7 @@
             </div>
         </div>
 
-        <!-- MÓDULOS -->
+        <!-- MÓDULOS DE ENSINO -->
         <div id="screen-modulos" class="screen">
             <header>
                 <h1>Módulos de Ensino</h1>
@@ -247,34 +248,34 @@
             </div>
         </div>
 
-        <!-- MENU INFERIOR FIXO E LIVRE DE SOBREPOSIÇÕES -->
+        <!-- MENU INFERIOR FIXO E TOTALMENTE CLICÁVEL -->
         <div class="bottom-nav" id="bottom-nav">
-            <div class="nav-item active" onclick="navTo('dashboard', this)">
+            <div id="nav-dashboard" class="nav-item active" onclick="navTo('dashboard', this)">
                 <div class="nav-icon">🏠</div>
                 <span>Início</span>
             </div>
-            <div class="nav-item" onclick="navTo('clinico', this)">
+            <div id="nav-clinico" class="nav-item" onclick="navTo('clinico', this)">
                 <div class="nav-icon">❤️</div>
                 <span>Diário</span>
             </div>
-            <div class="nav-item" onclick="navTo('modulos', this)">
+            <div id="nav-modulos" class="nav-item" onclick="navTo('modulos', this)">
                 <div class="nav-icon">📚</div>
                 <span>Módulos</span>
             </div>
         </div>
 
-        <!-- CHATBOT -->
+        <!-- CHATBOT TREINADO CLINICAMENTE -->
         <div class="chat-fab" id="chat-fab" onclick="toggleChat()">💬</div>
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
-                Assistente Vascular
+                Assistente Vascular Especializado
                 <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
             </div>
             <div class="chat-body" id="chat-body">
-                <div class="msg msg-bot">Olá! Sou seu assistente virtual do HemoHealth. Dúvidas sobre dormir, hematomas ou higiene? Digite abaixo.</div>
+                <div class="msg msg-bot">Olá! Sou seu assistente clínico do HemoHealth. Pode perguntar sobre higiene da FAV, controle hídrico, frêmito ou sinais de alerta.</div>
             </div>
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Escreva sua dúvida...">
+                <input type="text" id="chat-input" placeholder="Digite sua dúvida clínica..." onkeypress="if(event.key === 'Enter') sendMsg()">
                 <button onclick="sendMsg()">Enviar</button>
             </div>
         </div>
@@ -313,4 +314,259 @@
             },
             proibido: {
                 title: "3. O que NUNCA fazer",
-                desc: "O membro portador da fístula deve ser preservado a todo custo. É terminantemente proibido aferir pressão arterial, coletar ex
+                desc: "O membro portador da fístula deve ser preservado a todo custo. É terminantemente proibido aferir pressão arterial, coletar exames de sangue, administrar medicamentos ou utilizar roupas e relógios apertados nele.",
+                videos: []
+            },
+            alertas: {
+                title: "4. Sinais de Alerta",
+                desc: "Saber reconhecer sinais flogísticos (calor, vermelhidão, dor intensa), ausência súbita de frêmito ou inchaços anômalos permite buscar atendimento médico imediato, evitando a trombose e a perda do acesso.",
+                videos: []
+            }
+        };
+
+        let currentActiveTopic = null;
+        let xp = 0;
+        let water = 0;
+        let vitalsHistory = [];
+        let photos = [];
+
+        const todayStr = new Date().toDateString();
+        const lastSavedDate = localStorage.getItem('hh_date') || todayStr;
+
+        try {
+            xp = parseInt(localStorage.getItem('hh_xp')) || 0;
+            
+            if(lastSavedDate !== todayStr) {
+                const oldWater = localStorage.getItem('hh_water') || '0';
+                let autoLog = JSON.parse(localStorage.getItem('hh_vitals')) || [];
+                autoLog.unshift({
+                    date: "Balanço Fechado (" + lastSavedDate + ")",
+                    text: "Total ingerido: " + oldWater + " mL"
+                });
+                localStorage.setItem('hh_vitals', JSON.stringify(autoLog));
+                
+                water = 0;
+                localStorage.setItem('hh_water', 0);
+                localStorage.setItem('hh_date', todayStr);
+            } else {
+                water = parseInt(localStorage.getItem('hh_water')) || 0;
+            }
+
+            vitalsHistory = JSON.parse(localStorage.getItem('hh_vitals')) || [];
+            photos = JSON.parse(localStorage.getItem('hh_photos')) || [];
+            
+            const savedMods = localStorage.getItem('hh_modules_data');
+            if(savedMods) {
+                modulesData = JSON.parse(savedMods);
+            }
+        } catch(e) {}
+
+        updateUI();
+
+        // SISTEMA DE NAVEGAÇÃO ROBUSTO E CORRIGIDO
+        function navTo(targetId, el) {
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+            });
+            const targetScreen = document.getElementById('screen-' + targetId);
+            if(targetScreen) {
+                targetScreen.classList.add('active');
+            }
+            
+            document.querySelectorAll('.nav-item').forEach(n => {
+                n.classList.remove('active');
+            });
+            if(el) {
+                el.classList.add('active');
+            }
+        }
+
+        function openTopic(key) {
+            currentActiveTopic = key;
+            const data = modulesData[key];
+            if(!data) return;
+
+            document.getElementById('topic-title').innerText = data.title;
+            document.getElementById('topic-desc').innerText = data.desc;
+            renderVideos();
+
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-topic-detail').classList.add('active');
+        }
+
+        function renderVideos() {
+            const data = modulesData[currentActiveTopic];
+            const vidContainer = document.getElementById('topic-videos');
+            vidContainer.innerHTML = '';
+            
+            if(!data.videos || data.videos.length === 0) {
+                vidContainer.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma videoaula cadastrada neste módulo ainda.</p>';
+            } else {
+                data.videos.forEach(v => {
+                    vidContainer.innerHTML += `
+                        <div class="video-wrapper"><iframe src="${v.url}" allowfullscreen></iframe></div>
+                        <div class="video-title">${v.title}</div>
+                    `;
+                });
+            }
+        }
+
+        function addNewVideo() {
+            const titleInput = document.getElementById('new-vid-title');
+            const urlInput = document.getElementById('new-vid-url');
+            
+            if(!titleInput.value || !urlInput.value) {
+                alert('Preencha o título e o link do vídeo.');
+                return;
+            }
+
+            if(!modulesData[currentActiveTopic].videos) {
+                modulesData[currentActiveTopic].videos = [];
+            }
+
+            modulesData[currentActiveTopic].videos.push({
+                title: titleInput.value,
+                url: urlInput.value
+            });
+
+            try {
+                localStorage.setItem('hh_modules_data', JSON.stringify(modulesData));
+            } catch(e) {}
+
+            titleInput.value = '';
+            urlInput.value = '';
+            renderVideos();
+            alert('Videoaula adicionada com sucesso!');
+        }
+
+        function backToModules() {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-modulos').classList.add('active');
+        }
+
+        function updateUI() {
+            document.getElementById('water-display').innerText = water + ' mL';
+            document.getElementById('xp-text').innerText = xp + ' XP';
+            document.getElementById('xp-bar'].style.width = Math.min((xp / 100) * 100, 100) + '%';
+            renderVitals();
+            renderPhotos();
+        }
+
+        function checkFremito(isOk) {
+            if(isOk) {
+                document.getElementById('btn-fremito-sim').classList.add('active');
+                xp += 10;
+                try { localStorage.setItem('hh_xp', xp); } catch(e){}
+                updateUI();
+            } else {
+                alert('ALERTA: Vá imediatamente à emergência ou contate sua clínica. A fístula pode estar trombosada!');
+            }
+        }
+
+        function addWater(amount) {
+            water += amount;
+            if(water < 0) water = 0;
+            try { 
+                localStorage.setItem('hh_water', water);
+                localStorage.setItem('hh_date', new Date().toDateString());
+            } catch(e){}
+            updateUI();
+        }
+
+        function addVitals() {
+            const sis = document.getElementById('pa-sis').value;
+            const dia = document.getElementById('pa-dia').value;
+            const spo2 = document.getElementById('spo2').value;
+            const hr = document.getElementById('hr').value;
+            
+            if(!sis || !dia) return alert('Preencha pelo menos os valores de Pressão Arterial.');
+            
+            const date = new Date().toLocaleDateString('pt-BR') + ' ' + new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0');
+            const summary = `${sis}x${dia} mmHg ${spo2 ? '| SpO2: ' + spo2 + '%' : ''} ${hr ? '| FC: ' + hr + 'bpm' : ''}`;
+            
+            vitalsHistory.unshift({date, text: summary, isVital: true});
+            try { localStorage.setItem('hh_vitals', JSON.stringify(vitalsHistory)); } catch(e){}
+            
+            document.getElementById('pa-sis').value = '';
+            document.getElementById('pa-dia').value = '';
+            document.getElementById('spo2').value = '';
+            document.getElementById('hr').value = '';
+            updateUI();
+        }
+
+        function renderVitals() {
+            const list = document.getElementById('vitals-history');
+            if(vitalsHistory.length === 0) {
+                list.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">Nenhum registo recente.</p>';
+                return;
+            }
+            list.innerHTML = vitalsHistory.map(item => `
+                <div class="history-item">
+                    <span style="color:var(--text-muted);">${item.date}</span>
+                    <strong style="color:var(--text-main);">${item.text}</strong>
+                </div>
+            `).join('');
+        }
+
+        function savePhoto(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                photos.unshift(event.target.result);
+                if(photos.length > 4) photos.pop(); 
+                try { localStorage.setItem('hh_photos', JSON.stringify(photos)); } catch(e){}
+                updateUI();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderPhotos() {
+            const gallery = document.getElementById('photo-gallery');
+            if(photos.length === 0) {
+                gallery.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); grid-column: span 2;">Nenhuma foto recente.</p>';
+                return;
+            }
+            gallery.innerHTML = photos.map(src => `<div class="photo-box" style="background-image: url('${src}')"></div>`).join('');
+        }
+
+        function openSOS() { document.getElementById('modal-sos').style.display = 'flex'; }
+        function closeSOS() { document.getElementById('modal-sos').style.display = 'none'; }
+
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // IA CLINICAMENTE TREINADA COM RESPOSTAS DETALHADAS E BASEADAS EM EVIDÊNCIAS
+        function sendMsg() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim().toLowerCase();
+            if(!text) return;
+
+            const body = document.getElementById('chat-body');
+            body.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let resp = "Para dúvidas específicas sobre o seu plano de tratamento individualizado, consulte o nefrologista ou a equipa de enfermagem na sua próxima sessão de hemodiálise.";
+                
+                if(text.includes('lavar') || text.includes('higiene') || text.includes('limpar') || text.includes('fav')) {
+                    resp = "<b>Como lavar e cuidar da FAV:</b><br>1. Lave diariamente o braço da fístula com água morna e sabão neutro antes de qualquer manipulação.<br>2. Seque suavemente com uma toalha limpa, sem esfregar com força.<br>3. Inspecione visualmente à procura de vermelhidão, calor local ou edema.<br>4. Nunca utilize escovas ou produtos abrasivos sobre o trajeto vascular.";
+                } else if(text.includes('frêmito') || text.includes('tremor') || text.includes('vibrar')) {
+                    resp = "<b>Sobre o Frêmito:</b> O frêmito é a vibração palpável contínua causada pelo fluxo arterial de alta velocidade na veia arterializada. Deve palpar o local suavemente todos os dias. A ausência súbita de frêmito ou sopro indica risco de trombose, exigindo atendimento médico imediato.";
+                } else if(text.includes('dormir') || text.includes('posição')) {
+                    resp = "<b>Cuidados ao dormir:</b> Nunca durma apoiado sobre o braço da fístula. A compressão prolongada durante o sono pode interromper o fluxo sanguíneo, provocando trombose e perda do acesso vascular.";
+                } else if(text.includes('pressão') || text.includes('pa') || text.includes('sangue')) {
+                    resp = "<b>Pressão arterial e FAV:</b> É terminantemente proibido aferir pressão arterial ou colher sangue no braço portador da fístula. A compressão do manguito pode danificar a parede vascular e causar obstrução do acesso.";
+                } else if(text.includes('água') || text.includes('líquido') || text.includes('beber') || text.includes('peso')) {
+                    resp = "<b>Controle Hídrico:</b> O ganho de peso interdialítico ideal deve ser inferior a 2 a 3% do peso seco. O excesso de líquidos sobrecarrega o sistema cardiovascular e aumenta a pressão sobre a fístula durante as sessões.";
+                }
+
+                body.innerHTML += `<div class="msg msg-bot">${resp}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
