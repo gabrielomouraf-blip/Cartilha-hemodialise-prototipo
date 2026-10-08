@@ -49,10 +49,10 @@
         .btn-action { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-body); font-weight: 600; cursor: pointer; color: var(--text-main); }
         .btn-action.active { background: var(--btn-primary); color: white; border-color: var(--btn-primary); }
         
-        .water-circle { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--water); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; color: var(--btn-primary); margin: 0 auto 12px auto; background: #e0f2fe; }
+        .water-circle { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--water); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; color: var(--btn-primary); margin: 0 auto 12px auto; background: #e0f2fe; }
         
-        .input-group { display: flex; gap: 12px; margin-bottom: 12px; }
-        .input-box { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-body); outline: none; }
+        .input-group { display: flex; gap: 8px; margin-bottom: 12px; }
+        .input-box { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-body); outline: none; font-size: 0.9rem; }
         .btn-submit { background: var(--btn-primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: var(--btn-hover); }
         
@@ -62,6 +62,7 @@
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
         .photo-box { width: 100%; aspect-ratio: 1; background: #e2e8f0; border-radius: 10px; background-size: cover; background-position: center; }
 
+        /* Módulos e Admin */
         .module-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
         .module-info h3 { margin: 0 0 4px 0; font-size: 0.95rem; }
         .module-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
@@ -72,6 +73,8 @@
         .video-wrapper { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; aspect-ratio: 16/9; }
         .video-wrapper iframe { width: 100%; height: 100%; border: none; }
         .video-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin: 0 0 20px 0; }
+
+        .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 16px; border-radius: 14px; margin-bottom: 20px; }
 
         .bottom-nav { position: absolute; bottom: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 10; box-shadow: 0 -4px 12px rgba(0,0,0,0.03); }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
@@ -100,7 +103,7 @@
 
     <div class="app-container">
         
-        <!-- DASHBOARD (INÍCIO DIRETO) -->
+        <!-- DASHBOARD (INÍCIO) -->
         <div id="screen-dashboard" class="screen active">
             <header>
                 <h1>HemoHealth</h1>
@@ -128,31 +131,46 @@
                     </div>
                 </div>
 
+                <!-- CONTROLE HÍDRICO COM RESET AUTOMÁTICO E CORREÇÃO -->
                 <div class="card" style="text-align: center;">
-                    <h3 style="margin:0 0 16px 0; font-size:0.95rem;">Controle Hídrico</h3>
+                    <h3 style="margin:0 0 4px 0; font-size:0.95rem;">Balanço Hídrico Diário</h3>
+                    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Zera automaticamente à meia-noite</p>
                     <div class="water-circle" id="water-display">0 mL</div>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">Lembre-se do seu limite para proteger a sua fístula.</p>
-                    <button class="btn-submit" onclick="addWater()">+ Beber 200mL</button>
+                    <div style="display:flex; gap:8px; margin-bottom:8px;">
+                        <button class="btn-submit" style="background:var(--water); color:#0c4a6e;" onclick="addWater(200)">+ 200mL</button>
+                        <button class="btn-submit" style="background:#e2e8f0; color:var(--text-main);" onclick="addWater(-200)">- Corrigir (200mL)</button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- DIÁRIO CLÍNICO -->
+        <!-- DIÁRIO CLÍNICO (SINAIS VITAIS UNIFICADOS E CORRIGIDOS) -->
         <div id="screen-clinico" class="screen">
             <header>
                 <h1>Dados Clínicos</h1>
-                <p>Histórico para sua equipe médica</p>
+                <p>Histórico unificado para sua equipe médica</p>
             </header>
             <div class="content-scroll">
+                
+                <!-- CARTÃO ÚNICO DE SINAIS VITAIS -->
                 <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Registo de Pressão Arterial</h3>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">A hipotensão severa pode paralisar sua fístula.</p>
+                    <h3 style="margin:0 0 4px 0; font-size:0.95rem;">Registo de Sinais Vitais</h3>
+                    <p style="margin:0 0 14px 0; font-size:0.8rem; color:var(--text-muted);">Pressão Arterial, Oxigenação e Frequência Cardíaca</p>
+                    
+                    <div style="font-size:0.8rem; font-weight:600; margin-bottom:4px;">Pressão Arterial (mmHg)</div>
                     <div class="input-group">
                         <input type="number" id="pa-sis" class="input-box" placeholder="Sistólica (ex: 120)">
                         <input type="number" id="pa-dia" class="input-box" placeholder="Diastólica (ex: 80)">
                     </div>
-                    <button class="btn-submit" onclick="addPA()">Salvar Medição</button>
-                    <div class="history-list" id="pa-history"></div>
+
+                    <div style="font-size:0.8rem; font-weight:600; margin-bottom:4px;">Oxigenação e Batimentos</div>
+                    <div class="input-group">
+                        <input type="number" id="spo2" class="input-box" placeholder="SpO2 % (ex: 98)">
+                        <input type="number" id="hr" class="input-box" placeholder="FC bpm (ex: 75)">
+                    </div>
+
+                    <button class="btn-submit" onclick="addVitals()">Salvar Registo Clínico</button>
+                    <div class="history-list" id="vitals-history"></div>
                 </div>
 
                 <div class="card">
@@ -165,7 +183,7 @@
             </div>
         </div>
 
-        <!-- MÓDULOS DE ENSINO -->
+        <!-- MÓDULOS -->
         <div id="screen-modulos" class="screen">
             <header>
                 <h1>Módulos de Ensino</h1>
@@ -203,23 +221,32 @@
             </div>
         </div>
 
-        <!-- DETALHE DO MÓDULO -->
+        <!-- DETALHE MÓDULO COM ADMIN CORRIGIDO PARA ADICIONAR VÍDEOS -->
         <div id="screen-topic-detail" class="screen">
             <header>
                 <button class="back-sub-btn" onclick="backToModules()"><span>←</span> Voltar aos Módulos</button>
-                <h1 id="topic-title">Título</h1>
+                <h1 id="topic-title">Título do Módulo</h1>
                 <p>Conteúdo Educacional</p>
             </header>
             <div class="content-scroll">
                 <div class="card">
                     <p id="topic-desc" style="font-size: 0.9rem; line-height: 1.6; color: var(--text-main); margin: 0;"></p>
                 </div>
+
+                <!-- PAINEL DE ADMIN PARA ADICIONAR VÍDEOS CORRIGIDO -->
+                <div class="admin-box">
+                    <h4 style="margin:0 0 8px 0; font-size:0.9rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula</h4>
+                    <input type="text" id="new-vid-title" class="input-box" placeholder="Título da aula (ex: Cuidados pós-punção)" style="margin-bottom:8px; width:100%;">
+                    <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube Embed (ex: https://www.youtube.com/embed/...)" style="margin-bottom:8px; width:100%;">
+                    <button class="btn-submit" onclick="addNewVideo()">Salvar e Exibir Vídeo</button>
+                </div>
+
                 <div class="section-title">Videoaulas Explicativas</div>
                 <div id="topic-videos"></div>
             </div>
         </div>
 
-        <!-- MENU INFERIOR FIXO -->
+        <!-- MENU INFERIOR -->
         <div class="bottom-nav" id="bottom-nav">
             <div class="nav-item active" onclick="navTo('dashboard', this)">
                 <div class="nav-icon">🏠</div>
@@ -235,7 +262,7 @@
             </div>
         </div>
 
-        <!-- CHATBOT FLUTUANTE -->
+        <!-- CHATBOT -->
         <div class="chat-fab" id="chat-fab" onclick="toggleChat()">💬</div>
         <div class="chat-window" id="chat-window">
             <div class="chat-header">
@@ -268,7 +295,8 @@
     </div>
 
     <script>
-        const modulesData = {
+        // MÓDULOS DE ENSINO COM SUPORTE A ADIÇÃO DE VÍDEOS
+        let modulesData = {
             maturacao: {
                 title: "1. Período de Maturação",
                 desc: "Após a confecção cirúrgica, a fístula arteriovenosa requer repouso inicial e posterior estímulo com exercícios de compressão manual para promover a dilatação venosa adequada antes das primeiras punções.",
@@ -295,16 +323,43 @@
             }
         };
 
+        let currentActiveTopic = null;
         let xp = 0;
         let water = 0;
-        let paHistory = [];
+        let vitalsHistory = [];
         let photos = [];
+
+        // VERIFICAÇÃO DE MUDANÇA DE DIA PARA RESETAR O BALANÇO HÍDRICO AUTOMATICAMENTE
+        const todayStr = new Date().toDateString();
+        const lastSavedDate = localStorage.getItem('hh_date') || todayStr;
 
         try {
             xp = parseInt(localStorage.getItem('hh_xp')) || 0;
-            water = parseInt(localStorage.getItem('hh_water')) || 0;
-            paHistory = JSON.parse(localStorage.getItem('hh_pa')) || [];
+            
+            // Se o dia mudou, zera a água e regista no histórico automático
+            if(lastSavedDate !== todayStr) {
+                const oldWater = localStorage.getItem('hh_water') || '0';
+                let autoLog = JSON.parse(localStorage.getItem('hh_vitals')) || [];
+                autoLog.unshift({
+                    date: "Balanço Fechado (" + lastSavedDate + ")",
+                    text: "Total ingerido: " + oldWater + " mL"
+                });
+                localStorage.setItem('hh_vitals', JSON.stringify(autoLog));
+                
+                water = 0;
+                localStorage.setItem('hh_water', 0);
+                localStorage.setItem('hh_date', todayStr);
+            } else {
+                water = parseInt(localStorage.getItem('hh_water')) || 0;
+            }
+
+            vitalsHistory = JSON.parse(localStorage.getItem('hh_vitals')) || [];
             photos = JSON.parse(localStorage.getItem('hh_photos')) || [];
+            
+            const savedMods = localStorage.getItem('hh_modules_data');
+            if(savedMods) {
+                modulesData = JSON.parse(savedMods);
+            }
         } catch(e) {}
 
         updateUI();
@@ -320,16 +375,24 @@
         }
 
         function openTopic(key) {
+            currentActiveTopic = key;
             const data = modulesData[key];
             if(!data) return;
 
             document.getElementById('topic-title').innerText = data.title;
             document.getElementById('topic-desc').innerText = data.desc;
-            
+            renderVideos();
+
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen-topic-detail').classList.add('active');
+        }
+
+        function renderVideos() {
+            const data = modulesData[currentActiveTopic];
             const vidContainer = document.getElementById('topic-videos');
             vidContainer.innerHTML = '';
             
-            if(data.videos.length === 0) {
+            if(!data.videos || data.videos.length === 0) {
                 vidContainer.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma videoaula cadastrada neste módulo ainda.</p>';
             } else {
                 data.videos.forEach(v => {
@@ -339,9 +402,34 @@
                     `;
                 });
             }
+        }
 
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen-topic-detail').classList.add('active');
+        function addNewVideo() {
+            const titleInput = document.getElementById('new-vid-title');
+            const urlInput = document.getElementById('new-vid-url');
+            
+            if(!titleInput.value || !urlInput.value) {
+                alert('Preencha o título e o link do vídeo.');
+                return;
+            }
+
+            if(!modulesData[currentActiveTopic].videos) {
+                modulesData[currentActiveTopic].videos = [];
+            }
+
+            modulesData[currentActiveTopic].videos.push({
+                title: titleInput.value,
+                url: urlInput.value
+            });
+
+            try {
+                localStorage.setItem('hh_modules_data', JSON.stringify(modulesData));
+            } catch(e) {}
+
+            titleInput.value = '';
+            urlInput.value = '';
+            renderVideos();
+            alert('Videoaula adicionada com sucesso!');
         }
 
         function backToModules() {
@@ -351,100 +439,4 @@
 
         function updateUI() {
             document.getElementById('water-display').innerText = water + ' mL';
-            document.getElementById('xp-text').innerText = xp + ' XP';
-            document.getElementById('xp-bar').style.width = Math.min((xp / 100) * 100, 100) + '%';
-            renderPA();
-            renderPhotos();
-        }
-
-        function checkFremito(isOk) {
-            if(isOk) {
-                document.getElementById('btn-fremito-sim').classList.add('active');
-                xp += 10;
-                try { localStorage.setItem('hh_xp', xp); } catch(e){}
-                updateUI();
-            } else {
-                alert('ALERTA: Vá imediatamente à emergência ou contate sua clínica. A fístula pode estar trombosada!');
-            }
-        }
-
-        function addWater() {
-            water += 200;
-            try { localStorage.setItem('hh_water', water); } catch(e){}
-            updateUI();
-        }
-
-        function addPA() {
-            const sis = document.getElementById('pa-sis').value;
-            const dia = document.getElementById('pa-dia').value;
-            if(!sis || !dia) return alert('Preencha os dois valores.');
-            
-            const date = new Date().toLocaleDateString('pt-BR') + ' ' + new Date().getHours() + ':' + new Date().getMinutes();
-            paHistory.unshift({date, sis, dia});
-            try { localStorage.setItem('hh_pa', JSON.stringify(paHistory)); } catch(e){}
-            
-            document.getElementById('pa-sis').value = '';
-            document.getElementById('pa-dia').value = '';
-            updateUI();
-        }
-
-        function renderPA() {
-            const list = document.getElementById('pa-history');
-            list.innerHTML = paHistory.map(item => `
-                <div class="history-item">
-                    <span style="color:var(--text-muted);">${item.date}</span>
-                    <strong style="color: ${item.sis < 100 ? 'var(--danger)' : 'var(--text-main)'}">${item.sis} x ${item.dia} mmHg</strong>
-                </div>
-            `).join('');
-        }
-
-        function savePhoto(e) {
-            const file = e.target.files[0];
-            if(!file) return;
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                photos.unshift(event.target.result);
-                if(photos.length > 4) photos.pop(); 
-                try { localStorage.setItem('hh_photos', JSON.stringify(photos)); } catch(e){}
-                updateUI();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function renderPhotos() {
-            const gallery = document.getElementById('photo-gallery');
-            if(photos.length === 0) {
-                gallery.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); grid-column: span 2;">Nenhuma foto recente.</p>';
-                return;
-            }
-            gallery.innerHTML = photos.map(src => `<div class="photo-box" style="background-image: url('${src}')"></div>`).join('');
-        }
-
-        function openSOS() { document.getElementById('modal-sos').style.display = 'flex'; }
-        function closeSOS() { document.getElementById('modal-sos').style.display = 'none'; }
-
-        function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function sendMsg() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim().toLowerCase();
-            if(!text) return;
-
-            const body = document.getElementById('chat-body');
-            body.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
-            input.value = '';
-
-            setTimeout(() => {
-                let resp = "Recomendo consultar o enfermeiro na sua próxima sessão de hemodiálise.";
-                if(text.includes('dormir')) resp = "Nunca durma em cima do braço da fístula para não interromper a circulação.";
-                if(text.includes('roxo') || text.includes('hematoma')) resp = "Se o inchaço for grande ou doloroso, contate a clínica imediatamente.";
-                body.innerHTML += `<div class="msg msg-bot">${resp}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 800);
-        }
-    </script>
-</body>
-</html>
+            document.getElementById('xp-text
