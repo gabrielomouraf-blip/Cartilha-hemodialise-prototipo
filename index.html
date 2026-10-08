@@ -24,7 +24,7 @@
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
         
-        .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 100px; }
+        .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 110px; }
 
         .screen { display: none; flex-direction: column; width: 100%; }
         .screen.active { display: flex; }
@@ -75,14 +75,15 @@
 
         .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 16px; border-radius: 14px; margin-bottom: 20px; }
 
-        /* MENU INFERIOR FIXO COM Z-INDEX SEGURO PARA CLIQUES */
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 16px 0; z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; padding: 4px 12px; }
+        /* MENU INFERIOR CORRIGIDO E LIVRE DE BLOQUEIOS */
+        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0 16px 0; z-index: 1000; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; padding: 6px 20px; user-select: none; }
         .nav-item.active { color: var(--btn-primary); }
-        .nav-icon { font-size: 1.2rem; }
+        .nav-icon { font-size: 1.25rem; }
 
-        .chat-fab { position: fixed; bottom: 85px; right: max(calc(50% - 220px), 16px); width: 50px; height: 50px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 1001; }
-        .chat-window { position: fixed; bottom: 145px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 1002; overflow: hidden; }
+        /* CHATBOT REPOSICIONADO PARA NÃO BLOQUEAR OS BOTÕES */
+        .chat-fab { position: fixed; bottom: 95px; right: max(calc(50% - 225px), 16px); width: 48px; height: 48px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 900; }
+        .chat-window { position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 1002; overflow: hidden; }
         .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; }
         .chat-body { height: 250px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg-body); }
         .msg { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 85%; }
@@ -246,7 +247,7 @@
             </div>
         </div>
 
-        <!-- MENU INFERIOR FIXO E TOTALMENTE CLICÁVEL -->
+        <!-- MENU INFERIOR FIXO E LIVRE DE SOBREPOSIÇÕES -->
         <div class="bottom-nav" id="bottom-nav">
             <div class="nav-item active" onclick="navTo('dashboard', this)">
                 <div class="nav-icon">🏠</div>
@@ -312,64 +313,4 @@
             },
             proibido: {
                 title: "3. O que NUNCA fazer",
-                desc: "O membro portador da fístula deve ser preservado a todo custo. É terminantemente proibido aferir pressão arterial, coletar exames de sangue, administrar medicamentos ou utilizar roupas e relógios apertados nele.",
-                videos: []
-            },
-            alertas: {
-                title: "4. Sinais de Alerta",
-                desc: "Saber reconhecer sinais flogísticos (calor, vermelhidão, dor intensa), ausência súbita de frêmito ou inchaços anômalos permite buscar atendimento médico imediato, evitando a trombose e a perda do acesso.",
-                videos: []
-            }
-        };
-
-        let currentActiveTopic = null;
-        let xp = 0;
-        let water = 0;
-        let vitalsHistory = [];
-        let photos = [];
-
-        const todayStr = new Date().toDateString();
-        const lastSavedDate = localStorage.getItem('hh_date') || todayStr;
-
-        try {
-            xp = parseInt(localStorage.getItem('hh_xp')) || 0;
-            
-            if(lastSavedDate !== todayStr) {
-                const oldWater = localStorage.getItem('hh_water') || '0';
-                let autoLog = JSON.parse(localStorage.getItem('hh_vitals')) || [];
-                autoLog.unshift({
-                    date: "Balanço Fechado (" + lastSavedDate + ")",
-                    text: "Total ingerido: " + oldWater + " mL"
-                });
-                localStorage.setItem('hh_vitals', JSON.stringify(autoLog));
-                
-                water = 0;
-                localStorage.setItem('hh_water', 0);
-                localStorage.setItem('hh_date', todayStr);
-            } else {
-                water = parseInt(localStorage.getItem('hh_water')) || 0;
-            }
-
-            vitalsHistory = JSON.parse(localStorage.getItem('hh_vitals')) || [];
-            photos = JSON.parse(localStorage.getItem('hh_photos')) || [];
-            
-            const savedMods = localStorage.getItem('hh_modules_data');
-            if(savedMods) {
-                modulesData = JSON.parse(savedMods);
-            }
-        } catch(e) {}
-
-        updateUI();
-
-        function navTo(targetId, el) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen-' + targetId).classList.add('active');
-            
-            if(el) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                el.classList.add('active');
-            }
-        }
-
-        function openTopic(key) {
-            currentActiveTopic = key;
+                desc: "O membro portador da fístula deve ser preservado a todo custo. É terminantemente proibido aferir pressão arterial, coletar ex
