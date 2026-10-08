@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-body: #f4f5f7; /* Fundo off-white estilo PG */
+            --bg-body: #f4f5f7; 
             --card-bg: #ffffff;
-            --dark-card: #18181b; /* Cartão escuro estilo "18 Mentorados" */
+            --dark-card: #18181b; 
             --text-main: #18181b;
             --text-muted: #71717a;
-            --btn-primary: #047857; /* Verde estilo botão "Novo mentorado" */
+            --btn-primary: #047857; 
             --btn-hover: #065f46;
             --border: #e4e4e7;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -81,6 +81,11 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
+            transition: background 0.2s;
+        }
+        
+        .back-btn:hover {
+            background: #f4f5f7;
         }
 
         .content {
@@ -119,3 +124,19 @@
             font-weight: 600;
             color: #f4f4f5;
         }
+
+        .welcome-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #a1a1aa;
+        }
+
+        /* Cartões de Módulos (Menu) */
+        .module-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer
