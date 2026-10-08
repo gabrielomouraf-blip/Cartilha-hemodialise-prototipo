@@ -71,7 +71,7 @@
 
         .video-wrapper { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 10px; aspect-ratio: 16/9; }
         .video-wrapper iframe { width: 100%; height: 100%; border: none; }
-        .video-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0 0 16px 0; }
+        .video-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0; }
 
         .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 14px; border-radius: 14px; margin-bottom: 16px; }
 
@@ -235,7 +235,7 @@
                 <div class="admin-box">
                     <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula</h4>
                     <input type="text" id="new-vid-title" class="input-box" placeholder="Título da aula (ex: Cuidados pós-punção)" style="margin-bottom:8px; width:100%;">
-                    <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube Embed (ex: https://www.youtube.com/embed/...)" style="margin-bottom:8px; width:100%;">
+                    <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube (ex: https://youtube.com/watch?v=...)" style="margin-bottom:8px; width:100%;">
                     <button class="btn-submit" onclick="addNewVideo()">Salvar e Exibir Vídeo</button>
                 </div>
 
@@ -381,6 +381,19 @@
             document.getElementById('screen-topic-detail').classList.add('active');
         }
 
+        // CONVERSOR AUTOMÁTICO DE URL DO YOUTUBE PARA EVITAR "CONEXÃO RECUSADA"
+        function convertYouTubeUrl(url) {
+            if (!url) return '';
+            if (url.includes('/embed/')) return url;
+            let videoId = '';
+            if (url.includes('watch?v=')) {
+                videoId = url.split('watch?v=')[1]?.split('&')[0];
+            } else if (url.includes('youtu.be/')) {
+                videoId = url.split('youtu.be/')[1]?.split('?')[0];
+            }
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+        }
+
         function renderVideos() {
             const data = modulesData[currentActiveTopic];
             const vidContainer = document.getElementById('topic-videos');
@@ -389,12 +402,26 @@
             if(!data.videos || data.videos.length === 0) {
                 vidContainer.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">Nenhuma videoaula cadastrada neste módulo ainda.</p>';
             } else {
-                data.videos.forEach(v => {
+                data.videos.forEach((v, index) => {
                     vidContainer.innerHTML += `
                         <div class="video-wrapper"><iframe src="${v.url}" allowfullscreen></iframe></div>
-                        <div class="video-title">${v.title}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                            <div class="video-title">${v.title}</div>
+                            <button onclick="deleteVideo(${index})" style="background: var(--danger); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; cursor: pointer;">🗑️ Excluir</button>
+                        </div>
                     `;
                 });
+            }
+        }
+
+        // FUNÇÃO PARA EXCLUIR VÍDEOS INDESEJADOS
+        function deleteVideo(index) {
+            if(confirm('Deseja realmente remover esta videoaula?')) {
+                modulesData[currentActiveTopic].videos.splice(index, 1);
+                try {
+                    localStorage.setItem('hh_modules_data', JSON.stringify(modulesData));
+                } catch(e) {}
+                renderVideos();
             }
         }
 
@@ -407,13 +434,15 @@
                 return;
             }
 
+            const processedUrl = convertYouTubeUrl(urlInput.value.trim());
+
             if(!modulesData[currentActiveTopic].videos) {
                 modulesData[currentActiveTopic].videos = [];
             }
 
             modulesData[currentActiveTopic].videos.push({
-                title: titleInput.value,
-                url: urlInput.value
+                title: titleInput.value.trim(),
+                url: processedUrl
             });
 
             try {
