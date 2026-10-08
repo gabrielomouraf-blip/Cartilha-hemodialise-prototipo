@@ -22,80 +22,83 @@
         }
 
         * { box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-body); color: var(--text-main); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; }
+        html, body { height: 100%; margin: 0; padding: 0; background-color: var(--bg-body); color: var(--text-main); display: flex; justify-content: center; overflow: hidden; }
         
-        .app-container { width: 100%; max-width: 480px; background-color: var(--bg-body); min-height: 100vh; display: flex; flex-direction: column; position: relative; padding-bottom: 100px; }
+        .app-container { width: 100%; max-width: 480px; height: 100vh; background-color: var(--bg-body); display: flex; flex-direction: column; position: relative; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.05); }
 
-        .screen { display: none; flex-direction: column; width: 100%; flex: 1; }
-        .screen.active { display: flex; }
+        /* TELAS COM POSICIONAMENTO ABSOLUTO PARA LIBERTAR CLIQUES */
+        .screen { display: none; flex-direction: column; height: 100%; width: 100%; position: absolute; top: 0; left: 0; background-color: var(--bg-body); }
+        .screen.active { display: flex; z-index: 10; }
 
-        header { padding: 24px 24px 12px 24px; flex-shrink: 0; }
-        header h1 { font-size: 1.4rem; font-weight: 700; margin: 0 0 4px 0; color: var(--text-main); }
-        header p { font-size: 0.85rem; margin: 0; color: var(--text-muted); }
+        header { padding: 20px 24px 10px 24px; flex-shrink: 0; background: var(--bg-body); z-index: 2; }
+        header h1 { font-size: 1.35rem; font-weight: 700; margin: 0 0 2px 0; color: var(--text-main); }
+        header p { font-size: 0.8rem; margin: 0; color: var(--text-muted); }
 
-        .content-scroll { padding: 0 24px 24px 24px; flex: 1; overflow-y: auto; }
+        .content-scroll { padding: 0 24px 90px 24px; flex: 1; overflow-y: auto; z-index: 2; }
 
-        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); position: relative; z-index: 2; }
+        .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 18px; margin-bottom: 14px; box-shadow: var(--shadow-sm); }
         .card-dark { background: var(--dark-card); color: white; border: none; }
         
-        .section-title { font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin: 24px 0 12px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+        .section-title { font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin: 20px 0 10px 0; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        .sos-btn { background: var(--danger); color: white; border: none; padding: 16px; border-radius: 16px; font-size: 1rem; font-weight: 700; width: 100%; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); margin-bottom: 20px; position: relative; z-index: 2; }
+        .sos-btn { background: var(--danger); color: white; border: none; padding: 14px; border-radius: 14px; font-size: 0.95rem; font-weight: 700; width: 100%; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); margin-bottom: 16px; }
         
-        .level-bar { width: 100%; background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 12px; overflow: hidden; }
+        .level-bar { width: 100%; background: rgba(255,255,255,0.2); height: 8px; border-radius: 4px; margin-top: 10px; overflow: hidden; }
         .level-fill { height: 100%; background: #38bdf8; width: 0%; transition: width 0.5s ease; }
 
-        .action-row { display: flex; gap: 10px; margin-top: 12px; }
+        .action-row { display: flex; gap: 10px; margin-top: 10px; }
         .btn-action { flex: 1; padding: 10px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg-body); font-weight: 600; cursor: pointer; color: var(--text-main); }
         .btn-action.active { background: var(--btn-primary); color: white; border-color: var(--btn-primary); }
         
-        .water-circle { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--water); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; color: var(--btn-primary); margin: 0 auto 12px auto; background: #e0f2fe; }
+        .water-circle { width: 75px; height: 75px; border-radius: 50%; border: 4px solid var(--water); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1rem; color: var(--btn-primary); margin: 0 auto 10px auto; background: #e0f2fe; }
         
-        .input-group { display: flex; gap: 8px; margin-bottom: 12px; }
-        .input-box { flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-body); outline: none; font-size: 0.9rem; }
-        .btn-submit { background: var(--btn-primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: 600; cursor: pointer; transition: background 0.2s; position: relative; z-index: 2; }
+        .input-group { display: flex; gap: 8px; margin-bottom: 10px; }
+        .input-box { flex: 1; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-body); outline: none; font-size: 0.85rem; }
+        .btn-submit { background: var(--btn-primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: 600; cursor: pointer; transition: background 0.2s; }
         .btn-submit:hover { background: var(--btn-hover); }
         
-        .history-list { font-size: 0.85rem; margin-top: 16px; }
-        .history-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .history-list { font-size: 0.8rem; margin-top: 12px; }
+        .history-item { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
         
-        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+        .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
         .photo-box { width: 100%; aspect-ratio: 1; background: #e2e8f0; border-radius: 10px; background-size: cover; background-position: center; }
 
-        .module-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; position: relative; z-index: 2; }
-        .module-info h3 { margin: 0 0 4px 0; font-size: 0.95rem; }
-        .module-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
-        .module-icon { width: 32px; height: 32px; background: #e0f2fe; color: var(--btn-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+        .module-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; }
+        .module-info h3 { margin: 0 0 2px 0; font-size: 0.9rem; }
+        .module-info p { margin: 0; font-size: 0.75rem; color: var(--text-muted); }
+        .module-icon { width: 30px; height: 30px; background: #e0f2fe; color: var(--btn-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
 
-        .back-sub-btn { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; color: var(--btn-primary); position: relative; z-index: 2; }
+        .back-sub-btn { background: white; border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; cursor: pointer; margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px; color: var(--btn-primary); }
 
-        .video-wrapper { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; aspect-ratio: 16/9; }
+        .video-wrapper { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 10px; aspect-ratio: 16/9; }
         .video-wrapper iframe { width: 100%; height: 100%; border: none; }
-        .video-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin: 0 0 20px 0; }
+        .video-title { font-size: 0.85rem; font-weight: 600; color: var(--text-main); margin: 0 0 16px 0; }
 
-        .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 16px; border-radius: 14px; margin-bottom: 20px; position: relative; z-index: 2; }
+        .admin-box { background: #e0f2fe; border: 1px dashed var(--btn-primary); padding: 14px; border-radius: 14px; margin-bottom: 16px; }
 
-        .bottom-nav { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 480px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 16px 0; z-index: 9999; box-shadow: 0 -4px 12px rgba(0,0,0,0.08); }
-        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.75rem; font-weight: 600; cursor: pointer; padding: 6px 24px; user-select: none; }
+        /* MENU INFERIOR FIXO COM Z-INDEX MÁXIMO */
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 70px; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; z-index: 100; box-shadow: 0 -4px 12px rgba(0,0,0,0.06); }
+        .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; padding: 8px 16px; user-select: none; }
         .nav-item.active { color: var(--btn-primary); }
-        .nav-icon { font-size: 1.25rem; }
+        .nav-icon { font-size: 1.15rem; }
 
-        .chat-fab { position: fixed; bottom: 85px; right: max(calc(50% - 225px), 16px); width: 48px; height: 48px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 9998; }
-        .chat-window { position: fixed; bottom: 145px; left: 50%; transform: translateX(-50%); width: calc(100% - 32px); max-width: 440px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 10000; overflow: hidden; }
-        .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
-        .chat-body { height: 260px; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: var(--bg-body); }
-        .msg { padding: 10px 14px; border-radius: 14px; font-size: 0.85rem; max-width: 90%; line-height: 1.4; }
+        /* CHATBOT */
+        .chat-fab { position: absolute; bottom: 80px; right: 16px; width: 46px; height: 46px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 110; }
+        .chat-window { position: absolute; bottom: 136px; left: 16px; right: 16px; background: var(--card-bg); border-radius: 18px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 120; overflow: hidden; }
+        .chat-header { background: var(--dark-card); color: white; padding: 10px 14px; font-weight: 600; font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+        .chat-body { height: 240px; padding: 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: var(--bg-body); }
+        .msg { padding: 8px 12px; border-radius: 12px; font-size: 0.8rem; max-width: 90%; line-height: 1.4; }
         .msg-bot { background: white; border: 1px solid var(--border); align-self: flex-start; border-bottom-left-radius: 4px; color: var(--text-main); }
         .msg-user { background: var(--btn-primary); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
         .chat-input-area { display: flex; border-top: 1px solid var(--border); background: white; }
-        .chat-input-area input { flex: 1; border: none; padding: 12px 16px; outline: none; font-size: 0.85rem; }
-        .chat-input-area button { background: none; border: none; padding: 0 16px; color: var(--btn-primary); font-weight: bold; cursor: pointer; }
+        .chat-input-area input { flex: 1; border: none; padding: 10px 14px; outline: none; font-size: 0.85rem; }
+        .chat-input-area button { background: none; border: none; padding: 0 14px; color: var(--btn-primary); font-weight: bold; cursor: pointer; }
 
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 20000; display: none; justify-content: center; align-items: center; padding: 24px; }
-        .sos-card { background: white; border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; text-align: center; }
-        .sos-card h2 { color: var(--danger); margin-top: 0; }
-        .sos-steps { text-align: left; margin: 20px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
-        .btn-close-sos { background: #e2e8f0; padding: 12px; border-radius: 10px; border: none; width: 100%; font-weight: bold; cursor: pointer; }
+        .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 200; display: none; justify-content: center; align-items: center; padding: 20px; }
+        .sos-card { background: white; border-radius: 20px; padding: 22px; width: 100%; max-width: 380px; text-align: center; }
+        .sos-card h2 { color: var(--danger); margin-top: 0; font-size: 1.2rem; }
+        .sos-steps { text-align: left; margin: 16px 0; font-size: 0.9rem; font-weight: 600; line-height: 1.5; }
+        .btn-close-sos { background: #e2e8f0; padding: 10px; border-radius: 10px; border: none; width: 100%; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -113,17 +116,17 @@
 
                 <div class="card card-dark">
                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h3 style="margin:0; font-size:1rem;">Nível Guardião da Fístula</h3>
+                        <h3 style="margin:0; font-size:0.95rem;">Nível Guardião da Fístula</h3>
                         <span id="xp-text" style="font-weight:bold; color:#38bdf8;">0 XP</span>
                     </div>
-                    <p style="font-size:0.8rem; color:#94a3b8; margin:4px 0 0 0;">Faça check-ins diários para subir de nível.</p>
+                    <p style="font-size:0.75rem; color:#94a3b8; margin:4px 0 0 0;">Faça check-ins diários para subir de nível.</p>
                     <div class="level-bar"><div class="level-fill" id="xp-bar"></div></div>
                 </div>
 
                 <div class="section-title">Monitoramento Físico</div>
                 <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Vibração da Fístula (Frêmito)</h3>
-                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">Você já sentiu o tremor característico no seu braço hoje?</p>
+                    <h3 style="margin:0 0 6px 0; font-size:0.9rem;">Vibração da Fístula (Frêmito)</h3>
+                    <p style="margin:0; font-size:0.75rem; color:var(--text-muted);">Você já sentiu o tremor característico no seu braço hoje?</p>
                     <div class="action-row">
                         <button class="btn-action" id="btn-fremito-sim" onclick="checkFremito(true)">Sim, senti</button>
                         <button class="btn-action" style="border-color:var(--danger); color:var(--danger);" onclick="checkFremito(false)">Não sinto</button>
@@ -131,10 +134,10 @@
                 </div>
 
                 <div class="card" style="text-align: center;">
-                    <h3 style="margin:0 0 4px 0; font-size:0.95rem;">Balanço Hídrico Diário</h3>
-                    <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:12px;">Zera automaticamente à meia-noite</p>
+                    <h3 style="margin:0 0 4px 0; font-size:0.9rem;">Balanço Hídrico Diário</h3>
+                    <p style="font-size:0.7rem; color:var(--text-muted); margin-bottom:10px;">Zera automaticamente à meia-noite</p>
                     <div class="water-circle" id="water-display">0 mL</div>
-                    <div style="display:flex; gap:8px; margin-bottom:8px;">
+                    <div style="display:flex; gap:8px;">
                         <button class="btn-submit" style="background:var(--water); color:#0c4a6e;" onclick="addWater(200)">+ 200mL</button>
                         <button class="btn-submit" style="background:#e2e8f0; color:var(--text-main);" onclick="addWater(-200)">- Corrigir (200mL)</button>
                     </div>
@@ -151,16 +154,16 @@
             <div class="content-scroll">
                 
                 <div class="card">
-                    <h3 style="margin:0 0 4px 0; font-size:0.95rem;">Registo de Sinais Vitais</h3>
-                    <p style="margin:0 0 14px 0; font-size:0.8rem; color:var(--text-muted);">Pressão Arterial, Oxigenação e Frequência Cardíaca</p>
+                    <h3 style="margin:0 0 4px 0; font-size:0.9rem;">Registo de Sinais Vitais</h3>
+                    <p style="margin:0 0 12px 0; font-size:0.75rem; color:var(--text-muted);">Pressão Arterial, Oxigenação e Frequência Cardíaca</p>
                     
-                    <div style="font-size:0.8rem; font-weight:600; margin-bottom:4px;">Pressão Arterial (mmHg)</div>
+                    <div style="font-size:0.75rem; font-weight:600; margin-bottom:4px;">Pressão Arterial (mmHg)</div>
                     <div class="input-group">
                         <input type="number" id="pa-sis" class="input-box" placeholder="Sistólica (ex: 120)">
                         <input type="number" id="pa-dia" class="input-box" placeholder="Diastólica (ex: 80)">
                     </div>
 
-                    <div style="font-size:0.8rem; font-weight:600; margin-bottom:4px;">Oxigenação e Batimentos</div>
+                    <div style="font-size:0.75rem; font-weight:600; margin-bottom:4px;">Oxigenação e Batimentos</div>
                     <div class="input-group">
                         <input type="number" id="spo2" class="input-box" placeholder="SpO2 % (ex: 98)">
                         <input type="number" id="hr" class="input-box" placeholder="FC bpm (ex: 75)">
@@ -171,8 +174,8 @@
                 </div>
 
                 <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Diário Fotográfico do Acesso</h3>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">Tire fotos caso note vermelhidão ou inchaço.</p>
+                    <h3 style="margin:0 0 6px 0; font-size:0.9rem;">Diário Fotográfico do Acesso</h3>
+                    <p style="margin:0 0 10px 0; font-size:0.75rem; color:var(--text-muted);">Tire fotos caso note vermelhidão ou inchaço.</p>
                     <input type="file" id="photo-upload" accept="image/*" style="display:none;" onchange="savePhoto(event)">
                     <button class="btn-submit" style="background:var(--dark-card);" onclick="document.getElementById('photo-upload').click()">+ Adicionar Foto</button>
                     <div class="photo-grid" id="photo-gallery"></div>
@@ -227,11 +230,11 @@
             </header>
             <div class="content-scroll">
                 <div class="card">
-                    <p id="topic-desc" style="font-size: 0.9rem; line-height: 1.6; color: var(--text-main); margin: 0;"></p>
+                    <p id="topic-desc" style="font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin: 0;"></p>
                 </div>
 
                 <div class="admin-box">
-                    <h4 style="margin:0 0 8px 0; font-size:0.9rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula</h4>
+                    <h4 style="margin:0 0 6px 0; font-size:0.85rem; color:var(--dark-card);">➕ Adicionar Nova Videoaula</h4>
                     <input type="text" id="new-vid-title" class="input-box" placeholder="Título da aula (ex: Cuidados pós-punção)" style="margin-bottom:8px; width:100%;">
                     <input type="text" id="new-vid-url" class="input-box" placeholder="Link do YouTube Embed (ex: https://www.youtube.com/embed/...)" style="margin-bottom:8px; width:100%;">
                     <button class="btn-submit" onclick="addNewVideo()">Salvar e Exibir Vídeo</button>
@@ -487,4 +490,73 @@
                 list.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">Nenhum registo recente.</p>';
                 return;
             }
-            list.innerHTML = vitalsHistory.
+            list.innerHTML = vitalsHistory.map(item => `
+                <div class="history-item">
+                    <span style="color:var(--text-muted);">${item.date}</span>
+                    <strong style="color:var(--text-main);">${item.text}</strong>
+                </div>
+            `).join('');
+        }
+
+        function savePhoto(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                photos.unshift(event.target.result);
+                if(photos.length > 4) photos.pop(); 
+                try { localStorage.setItem('hh_photos', JSON.stringify(photos)); } catch(e){}
+                updateUI();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderPhotos() {
+            const gallery = document.getElementById('photo-gallery');
+            if(!gallery) return;
+            if(photos.length === 0) {
+                gallery.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); grid-column: span 2;">Nenhuma foto recente.</p>';
+                return;
+            }
+            gallery.innerHTML = photos.map(src => `<div class="photo-box" style="background-image: url('${src}')"></div>`).join('');
+        }
+
+        function openSOS() { document.getElementById('modal-sos').style.display = 'flex'; }
+        function closeSOS() { document.getElementById('modal-sos').style.display = 'none'; }
+
+        function toggleChat() {
+            const win = document.getElementById('chat-window');
+            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        function sendMsg() {
+            const input = document.getElementById('chat-input');
+            const text = input.value.trim().toLowerCase();
+            if(!text) return;
+
+            const body = document.getElementById('chat-body');
+            body.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
+            input.value = '';
+
+            setTimeout(() => {
+                let resp = "Para dúvidas específicas sobre o seu plano de tratamento individualizado, consulte o nefrologista ou a equipa de enfermagem na sua próxima sessão de hemodiálise.";
+                
+                if(text.includes('lavar') || text.includes('higiene') || text.includes('limpar') || text.includes('fav')) {
+                    resp = "<b>Como lavar e cuidar da FAV:</b><br>1. Lave diariamente o braço da fístula com água morna e sabão neutro antes de qualquer manipulação.<br>2. Seque suavemente com uma toalha limpa, sem esfregar com força.<br>3. Inspecione visualmente à procura de vermelhidão, calor local ou edema.<br>4. Nunca utilize escovas ou produtos abrasivos sobre o trajeto vascular.";
+                } else if(text.includes('frêmito') || text.includes('tremor') || text.includes('vibrar')) {
+                    resp = "<b>Sobre o Frêmito:</b> O frêmito é a vibração palpável contínua causada pelo fluxo arterial de alta velocidade na veia arterializada. Deve palpar o local suavemente todos os dias. A ausência súbita de frêmito ou sopro indica risco de trombose, exigindo atendimento médico imediato.";
+                } else if(text.includes('dormir') || text.includes('posição')) {
+                    resp = "<b>Cuidados ao dormir:</b> Nunca durma apoiado sobre o braço da fístula. A compressão prolongada durante o sono pode interromper o fluxo sanguíneo, provocando trombose e perda do acesso vascular.";
+                } else if(text.includes('pressão') || text.includes('pa') || text.includes('sangue')) {
+                    resp = "<b>Pressão arterial e FAV:</b> É terminantemente proibido aferir pressão arterial ou colher sangue no braço portador da fístula. A compressão do manguito pode danificar a parede vascular e causar obstrução do acesso.";
+                } else if(text.includes('água') || text.includes('líquido') || text.includes('beber') || text.includes('peso')) {
+                    resp = "<b>Controle Hídrico:</b> O ganho de peso interdialítico ideal deve ser inferior a 2 a 3% do peso seco. O excesso de líquidos sobrecarrega o sistema cardiovascular e aumenta a pressão sobre a fístula durante as sessões.";
+                }
+
+                body.innerHTML += `<div class="msg msg-bot">${resp}</div>`;
+                body.scrollTop = body.scrollHeight;
+            }, 600);
+        }
+    </script>
+</body>
+</html>
