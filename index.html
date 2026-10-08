@@ -31,20 +31,20 @@
         .screen.active { display: flex; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- TELA DE LOGIN --- */
+        /* TELA DE LOGIN */
         #screen-login { justify-content: center; align-items: center; padding: 24px; background: var(--card-bg); z-index: 100; }
         .login-logo { width: 80px; height: 80px; background: var(--dark-card); border-radius: 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: bold; }
         .login-btn { background: white; border: 1px solid var(--border); padding: 14px 24px; border-radius: 30px; font-size: 0.95rem; font-weight: 600; color: var(--text-main); cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-sm); width: 100%; justify-content: center; margin-top: 30px; }
         .login-btn img { width: 24px; }
 
-        /* --- HEADER COMUM --- */
+        /* HEADER COMUM */
         header { padding: 30px 24px 16px 24px; flex-shrink: 0; }
         header h1 { font-size: 1.4rem; font-weight: 700; margin: 0 0 4px 0; color: var(--text-main); }
         header p { font-size: 0.85rem; margin: 0; color: var(--text-muted); }
 
         .content-scroll { padding: 0 24px 24px 24px; flex: 1; }
 
-        /* --- CARDS & COMPONENTES --- */
+        /* CARDS & COMPONENTES */
         .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; box-shadow: var(--shadow-sm); }
         .card-dark { background: var(--dark-card); color: white; }
         
@@ -64,7 +64,7 @@
         
         .water-circle { width: 80px; height: 80px; border-radius: 50%; border: 4px solid var(--water); display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; color: var(--water); margin: 0 auto 12px auto; }
         
-        /* Formulários (PA e Fotos) */
+        /* Formulários */
         .input-group { display: flex; gap: 12px; margin-bottom: 12px; }
         .input-box { flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg-body); outline: none; }
         .btn-submit { background: var(--btn-primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-weight: 600; cursor: pointer; }
@@ -75,19 +75,27 @@
         .photo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
         .photo-box { width: 100%; aspect-ratio: 1; background: #e4e4e7; border-radius: 10px; background-size: cover; background-position: center; }
 
-        /* Módulos de Ensino (Reaproveitados) */
-        .module-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        /* Módulos de Ensino */
+        .module-card { display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; transition: transform 0.2s; }
+        .module-card:active { transform: scale(0.98); }
         .module-info h3 { margin: 0 0 4px 0; font-size: 0.95rem; }
         .module-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
         .module-icon { width: 32px; height: 32px; background: var(--bg-body); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; flex-shrink: 0; }
 
-        /* --- NAVEGAÇÃO INFERIOR --- */
+        .back-sub-btn { background: white; border: 1px solid var(--border); padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 6px; }
+
+        /* VÍDEOS */
+        .video-wrapper { background: #000; border-radius: 12px; overflow: hidden; margin-bottom: 12px; aspect-ratio: 16/9; }
+        .video-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .video-title { font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin: 0 0 20px 0; }
+
+        /* NAVEGAÇÃO INFERIOR */
         .bottom-nav { position: absolute; bottom: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 0 20px 0; z-index: 10; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 0.7rem; font-weight: 600; cursor: pointer; }
         .nav-item.active { color: var(--btn-primary); }
         .nav-icon { font-size: 1.2rem; }
 
-        /* --- CHATBOT --- */
+        /* CHATBOT */
         .chat-fab { position: absolute; bottom: 80px; right: 20px; width: 56px; height: 56px; background: var(--dark-card); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; box-shadow: var(--shadow-md); z-index: 20; }
         .chat-window { position: absolute; bottom: 140px; right: 20px; width: calc(100% - 40px); background: var(--card-bg); border-radius: 16px; box-shadow: var(--shadow-md); border: 1px solid var(--border); display: none; flex-direction: column; z-index: 20; overflow: hidden; }
         .chat-header { background: var(--dark-card); color: white; padding: 12px 16px; font-weight: 600; font-size: 0.9rem; display: flex; justify-content: space-between; }
@@ -99,316 +107,9 @@
         .chat-input-area input { flex: 1; border: none; padding: 12px 16px; outline: none; font-size: 0.85rem; }
         .chat-input-area button { background: none; border: none; padding: 0 16px; color: var(--btn-primary); font-weight: bold; cursor: pointer; }
 
-        /* --- MODAL SOS --- */
+        /* MODAL SOS */
         .modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 50; display: none; justify-content: center; align-items: center; padding: 24px; }
         .sos-card { background: white; border-radius: 20px; padding: 24px; width: 100%; text-align: center; }
         .sos-card h2 { color: var(--danger); margin-top: 0; }
         .sos-steps { text-align: left; margin: 20px 0; font-size: 0.95rem; font-weight: 600; line-height: 1.6; }
-        .btn-close-sos { background: #e4e4e7; padding: 12px; border-radius: 10px; border: none; width: 100%; font-weight: bold; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-        
-        <!-- 1. TELA DE LOGIN -->
-        <div id="screen-login" class="screen active">
-            <div class="login-logo">CV</div>
-            <h1 style="margin:0;">CardioVasc</h1>
-            <p style="color:var(--text-muted); text-align:center; margin-top:8px; font-size:0.9rem;">Tecnologia Educacional para Preservação do Acesso Vascular</p>
-            
-            <button class="login-btn" onclick="doLogin()">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google">
-                Entrar com Google
-            </button>
-            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:20px; text-align:center;">Protótipo DSR • Hospitais Universitários (Recife/PE)</p>
-        </div>
-
-        <!-- 2. DASHBOARD (INÍCIO) -->
-        <div id="screen-dashboard" class="screen">
-            <header>
-                <h1>Resumo Diário</h1>
-                <p>Acompanhamento do seu autocuidado</p>
-            </header>
-            <div class="content-scroll">
-                
-                <button class="sos-btn" onclick="openSOS()">⚠️ EMERGÊNCIA (Sangramento)</button>
-
-                <div class="card card-dark">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <h3 style="margin:0; font-size:1rem;">Nível Guardião da Fístula</h3>
-                        <span id="xp-text" style="font-weight:bold; color:#a1a1aa;">0 XP</span>
-                    </div>
-                    <p style="font-size:0.8rem; color:#a1a1aa; margin:4px 0 0 0;">Faça check-ins para subir de nível.</p>
-                    <div class="level-bar"><div class="level-fill" id="xp-bar"></div></div>
-                </div>
-
-                <div class="section-title">Monitoramento Físico</div>
-                <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Vibração da Fístula (Frêmito)</h3>
-                    <p style="margin:0; font-size:0.8rem; color:var(--text-muted);">Você já sentiu o tremor característico no seu braço hoje?</p>
-                    <div class="action-row">
-                        <button class="btn-action" id="btn-fremito-sim" onclick="checkFremito(true)">Sim, senti</button>
-                        <button class="btn-action" style="border-color:var(--danger); color:var(--danger);" onclick="checkFremito(false)">Não sinto</button>
-                    </div>
-                </div>
-
-                <div class="card" style="text-align: center;">
-                    <h3 style="margin:0 0 16px 0; font-size:0.95rem;">Controle Hídrico</h3>
-                    <div class="water-circle" id="water-display">0 mL</div>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">Lembre-se do seu limite para não sobrecarregar a diálise.</p>
-                    <button class="btn-submit" style="background:var(--water);" onclick="addWater()">+ Beber 200mL</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. DIÁRIO CLÍNICO (PRESSÃO E FOTOS) -->
-        <div id="screen-clinico" class="screen">
-            <header>
-                <h1>Dados Clínicos</h1>
-                <p>Histórico para sua equipe médica</p>
-            </header>
-            <div class="content-scroll">
-                
-                <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Registo de Pressão Arterial</h3>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">A hipotensão severa pode paralisar sua fístula.</p>
-                    <div class="input-group">
-                        <input type="number" id="pa-sis" class="input-box" placeholder="Sistólica (ex: 120)">
-                        <input type="number" id="pa-dia" class="input-box" placeholder="Diastólica (ex: 80)">
-                    </div>
-                    <button class="btn-submit" onclick="addPA()">Salvar Medição</button>
-                    
-                    <div class="history-list" id="pa-history"></div>
-                </div>
-
-                <div class="card">
-                    <h3 style="margin:0 0 8px 0; font-size:0.95rem;">Diário Fotográfico do Acesso</h3>
-                    <p style="margin:0 0 12px 0; font-size:0.8rem; color:var(--text-muted);">Tire fotos caso note vermelhidão ou inchaço.</p>
-                    <input type="file" id="photo-upload" accept="image/*" style="display:none;" onchange="savePhoto(event)">
-                    <button class="btn-submit" style="background:var(--dark-card);" onclick="document.getElementById('photo-upload').click()">+ Adicionar Foto</button>
-                    
-                    <div class="photo-grid" id="photo-gallery"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MÓDULOS EDUCATIVOS -->
-        <div id="screen-modulos" class="screen">
-            <header>
-                <h1>Módulos de Ensino</h1>
-                <p>Tecnologia Educacional</p>
-            </header>
-            <div class="content-scroll">
-                
-                <div class="card module-card" onclick="alert('Funcionalidade de módulo detalhado preservada.')">
-                    <div class="module-info">
-                        <h3>1. Período de Maturação</h3>
-                        <p>Exercícios com a bolinha</p>
-                    </div>
-                    <div class="module-icon">›</div>
-                </div>
-                <div class="card module-card" onclick="alert('Funcionalidade de módulo detalhado preservada.')">
-                    <div class="module-info">
-                        <h3>2. Autocuidado Diário</h3>
-                        <p>Higiene e rotina preventiva</p>
-                    </div>
-                    <div class="module-icon">›</div>
-                </div>
-                <div class="card module-card" onclick="alert('Funcionalidade de módulo detalhado preservada.')">
-                    <div class="module-info">
-                        <h3>3. O que NUNCA fazer</h3>
-                        <p>Prevenção de punções indevidas</p>
-                    </div>
-                    <div class="module-icon">›</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- MENU INFERIOR -->
-        <div class="bottom-nav" id="bottom-nav" style="display:none;">
-            <div class="nav-item active" onclick="navTo('dashboard', this)">
-                <div class="nav-icon">🏠</div>
-                <span>Início</span>
-            </div>
-            <div class="nav-item" onclick="navTo('clinico', this)">
-                <div class="nav-icon">❤️</div>
-                <span>Diário</span>
-            </div>
-            <div class="nav-item" onclick="navTo('modulos', this)">
-                <div class="nav-icon">📚</div>
-                <span>Módulos</span>
-            </div>
-        </div>
-
-        <!-- CHATBOT -->
-        <div class="chat-fab" id="chat-fab" style="display:none;" onclick="toggleChat()">💬</div>
-        
-        <div class="chat-window" id="chat-window">
-            <div class="chat-header">
-                Assistente Vascular
-                <span style="cursor:pointer;" onclick="toggleChat()">✕</span>
-            </div>
-            <div class="chat-body" id="chat-body">
-                <div class="msg msg-bot">Olá! Sou seu assistente virtual. Dúvidas sobre dormir, hematomas ou higiene? Digite abaixo.</div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Escreva sua dúvida...">
-                <button onclick="sendMsg()">Enviar</button>
-            </div>
-        </div>
-
-        <!-- MODAL SOS -->
-        <div class="modal-overlay" id="modal-sos">
-            <div class="sos-card">
-                <h2>⚠️ SANGRAMENTO ATIVO</h2>
-                <p>Se a sua fístula rompeu ou sangra muito após a diálise, aja rápido:</p>
-                <div class="sos-steps">
-                    1. Pegue gazes limpas ou um pano limpo.<br><br>
-                    2. Pressione o local FIRMEMENTE de forma contínua por 15 minutos (sem espiar).<br><br>
-                    3. Mantenha o braço elevado (acima do nível do coração).
-                </div>
-                <button class="sos-btn" style="margin-bottom:10px;" onclick="alert('Simulando ligação para o SAMU (192) ou clínica local.')">📞 LIGAR EMERGÊNCIA</button>
-                <button class="btn-close-sos" onclick="closeSOS()">Já controlei a situação</button>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // ESTADO GLOBAL COM TRAVA DE SEGURANÇA MÁXIMA
-        let xp = 0;
-        let water = 0;
-        let paHistory = [];
-        let photos = [];
-
-        try {
-            xp = parseInt(localStorage.getItem('cv_xp')) || 0;
-            water = parseInt(localStorage.getItem('cv_water')) || 0;
-            paHistory = JSON.parse(localStorage.getItem('cv_pa')) || [];
-            photos = JSON.parse(localStorage.getItem('cv_photos')) || [];
-        } catch(e) {
-            console.warn("Segurança do navegador ativada. Dados locais bloqueados.");
-        }
-
-        // LOGIN
-        function doLogin() {
-            document.getElementById('screen-login').classList.remove('active');
-            document.getElementById('screen-dashboard').classList.add('active');
-            document.getElementById('bottom-nav').style.display = 'flex';
-            document.getElementById('chat-fab').style.display = 'flex';
-            updateUI();
-        }
-
-        // NAVEGAÇÃO
-        function navTo(targetId, el) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById('screen-' + targetId).classList.add('active');
-            
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            el.classList.add('active');
-        }
-
-        function updateUI() {
-            document.getElementById('water-display').innerText = water + ' mL';
-            document.getElementById('xp-text').innerText = xp + ' XP';
-            document.getElementById('xp-bar').style.width = Math.min((xp / 100) * 100, 100) + '%';
-            renderPA();
-            renderPhotos();
-        }
-
-        // DADOS
-        function checkFremito(isOk) {
-            if(isOk) {
-                document.getElementById('btn-fremito-sim').classList.add('active');
-                xp += 10;
-                try { localStorage.setItem('cv_xp', xp); } catch(e){}
-                updateUI();
-            } else {
-                alert('ALERTA: Vá imediatamente à emergência ou contate sua clínica. A fístula pode estar trombosada!');
-            }
-        }
-
-        function addWater() {
-            water += 200;
-            try { localStorage.setItem('cv_water', water); } catch(e){}
-            updateUI();
-        }
-
-        function addPA() {
-            const sis = document.getElementById('pa-sis').value;
-            const dia = document.getElementById('pa-dia').value;
-            if(!sis || !dia) return alert('Preencha os dois valores.');
-            
-            const date = new Date().toLocaleDateString('pt-BR') + ' ' + new Date().getHours() + ':' + new Date().getMinutes();
-            paHistory.unshift({date, sis, dia});
-            try { localStorage.setItem('cv_pa', JSON.stringify(paHistory)); } catch(e){}
-            
-            document.getElementById('pa-sis').value = '';
-            document.getElementById('pa-dia').value = '';
-            updateUI();
-        }
-
-        function renderPA() {
-            const list = document.getElementById('pa-history');
-            list.innerHTML = paHistory.map(item => `
-                <div class="history-item">
-                    <span style="color:var(--text-muted);">${item.date}</span>
-                    <strong style="color: ${item.sis < 100 ? 'var(--danger)' : 'var(--text-main)'}">${item.sis} x ${item.dia} mmHg</strong>
-                </div>
-            `).join('');
-        }
-
-        function savePhoto(e) {
-            const file = e.target.files[0];
-            if(!file) return;
-            
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                photos.unshift(event.target.result);
-                if(photos.length > 4) photos.pop(); 
-                try { localStorage.setItem('cv_photos', JSON.stringify(photos)); } catch(e){}
-                updateUI();
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function renderPhotos() {
-            const gallery = document.getElementById('photo-gallery');
-            if(photos.length === 0) {
-                gallery.innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); grid-column: span 2;">Nenhuma foto recente.</p>';
-                return;
-            }
-            gallery.innerHTML = photos.map(src => `<div class="photo-box" style="background-image: url('${src}')"></div>`).join('');
-        }
-
-        // SOS & CHAT
-        function openSOS() { document.getElementById('modal-sos').style.display = 'flex'; }
-        function closeSOS() { document.getElementById('modal-sos').style.display = 'none'; }
-
-        function toggleChat() {
-            const win = document.getElementById('chat-window');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function sendMsg() {
-            const input = document.getElementById('chat-input');
-            const text = input.value.trim().toLowerCase();
-            if(!text) return;
-
-            const body = document.getElementById('chat-body');
-            body.innerHTML += `<div class="msg msg-user">${input.value}</div>`;
-            input.value = '';
-
-            setTimeout(() => {
-                let resp = "Para essa dúvida específica, recomendo consultar o enfermeiro na sua próxima sessão de hemodiálise.";
-                if(text.includes('dormir')) resp = "Você NUNCA deve dormir em cima do braço da fístula. O peso interrompe a circulação.";
-                if(text.includes('roxo') || text.includes('hematoma')) resp = "Se o inchaço for grande, duro ou doloroso, contate a clínica.";
-                
-                body.innerHTML += `<div class="msg msg-bot">${resp}</div>`;
-                body.scrollTop = body.scrollHeight;
-            }, 800);
-        }
-    </script>
-</body>
-</html>
+        .btn-close-sos { background: #e4e4e7; padding: 12px; border-radius: 10px; border: none; width: 100%; font-weight: bold; cursor:
