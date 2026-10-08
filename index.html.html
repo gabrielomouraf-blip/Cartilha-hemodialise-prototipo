@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CardioVasc - Tecnologia Educacional em Hemodiálise</title>
+    <title>CardioVasc - Acesso Vascular</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0284c7;
-            --primary-dark: #0369a1;
-            --secondary: #0ea5e9;
-            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --bg-body: #f4f5f7; /* Fundo off-white estilo PG */
             --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1), 0 8px 10px -6px rgba(2, 132, 199, 0.1);
+            --dark-card: #18181b; /* Cartão escuro estilo "18 Mentorados" */
+            --text-main: #18181b;
+            --text-muted: #71717a;
+            --btn-primary: #047857; /* Verde estilo botão "Novo mentorado" */
+            --btn-hover: #065f46;
+            --border: #e4e4e7;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.06);
         }
 
         * {
@@ -25,7 +26,7 @@
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-body);
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -34,74 +35,63 @@
             min-height: 100vh;
         }
 
+        /* Container simulando App Mobile */
         .app-container {
             width: 100%;
             max-width: 480px;
-            background-color: var(--card-bg);
+            background-color: var(--bg-body);
             min-height: 100vh;
-            box-shadow: var(--shadow);
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow-x: hidden;
         }
 
-        /* Header Moderno */
+        /* Header Minimalista */
         header {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 24px 20px;
-            text-align: center;
+            padding: 40px 24px 20px 24px;
             position: relative;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
         }
 
         header h1 {
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            margin: 0 0 6px 0;
+            margin: 0 0 4px 0;
             letter-spacing: -0.5px;
+            color: var(--text-main);
         }
 
         header p {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             margin: 0;
-            opacity: 0.9;
-            font-weight: 400;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         .back-btn {
-            position: absolute;
-            left: 16px;
-            top: 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            backdrop-filter: blur(4px);
-            transition: background 0.2s;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        /* Conteúdo Principal */
         .content {
-            padding: 20px;
+            padding: 0 24px 24px 24px;
             flex: 1;
             overflow-y: auto;
         }
 
         .screen {
             display: none;
-            animation: fadeIn 0.3s ease-in-out;
+            animation: fadeIn 0.3s ease;
         }
 
         .screen.active {
@@ -109,246 +99,23 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Cartão de Boas-vindas / DSR */
+        /* Cartão Escuro de Boas-vindas (Estilo PG Mentoria) */
         .welcome-card {
-            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-            border: 1px solid #7dd3fc;
-            padding: 16px;
-            border-radius: 14px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #0369a1;
-        }
-
-        .welcome-card strong {
-            display: block;
-            margin-bottom: 4px;
-            font-size: 0.9rem;
-        }
-
-        /* Cartões de Módulos (Menu) */
-        .module-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 18px;
-            margin-bottom: 14px;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .module-card:hover {
-            border-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
-        }
-
-        .module-info h3 {
-            margin: 0 0 4px 0;
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-
-        .module-info p {
-            margin: 0;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .module-icon {
-            width: 36px;
-            height: 36px;
-            background: #f0f9ff;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        /* Ecrã de Detalhe do Tópico */
-        .topic-header-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            background: #f8fafc;
-            padding: 14px;
-            border-radius: 10px;
-            border-left: 4px solid var(--primary);
+            background-color: var(--dark-card);
+            color: #ffffff;
+            padding: 24px;
+            border-radius: 20px;
             margin-bottom: 24px;
+            box-shadow: var(--shadow-md);
         }
 
-        .section-title {
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin: 20px 0 12px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* Vídeos Estilizados */
-        .video-wrapper {
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            margin-bottom: 10px;
-            aspect-ratio: 16/9;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .video-wrapper iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-title {
-            font-size: 0.85rem;
+        .welcome-card h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.1rem;
             font-weight: 600;
-            color: var(--text-main);
-            margin: 4px 0 16px 0;
+            color: #f4f4f5;
         }
-
-        /* Painel Administrativo Moderno */
-        .admin-trigger {
-            margin-top: 30px;
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px dashed var(--border);
-        }
-
-        .admin-trigger button {
-            background: #f1f5f9;
-            border: 1px solid var(--border);
-            padding: 10px 16px;
-            border-radius: 10px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .admin-trigger button:hover {
-            background: #e2e8f0;
-            color: var(--text-main);
-        }
-
-        .admin-card {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            padding: 16px;
-            border-radius: 12px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .admin-card h4 {
-            margin: 0 0 12px 0;
-            font-size: 0.85rem;
-            color: var(--primary-dark);
-            font-weight: 700;
-        }
-
-        .admin-input {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.8rem;
-            background: white;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .admin-input:focus {
-            border-color: var(--primary);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: opacity 0.2s;
-        }
-
-        .btn-primary:hover {
-            opacity: 0.9;
-        }
-
-        /* Rodapé */
-        footer {
-            text-align: center;
-            padding: 16px;
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            background: #f8fafc;
-            border-top: 1px solid var(--border);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="app-container">
-        <!-- CABEÇALHO -->
-        <header>
-            <button class="back-btn" id="btn-back" style="display: none;" onclick="goHome()">← Voltar</button>
-            <h1 id="header-title">CardioVasc Saúde</h1>
-            <p id="header-subtitle">Guia Interativo de Acesso Vascular</p>
-        </header>
-
-        <!-- CONTEÚDO -->
-        <div class="content">
-            <!-- ECRÃ INICIAL -->
-            <div id="screen-home" class="screen active">
-                <div class="welcome-card">
-                    <strong>Tecnologia Educacional (DSR)</strong>
-                    Selecione um módulo abaixo para acessar os conteúdos clínicos fundamentados e videoaulas de apoio ao autocuidado.
-                </div>
-
-                <div class="module-card" onclick="openTopic('maturacao')">
-                    <div class="module-info">
-                        <h3>1. Período de Maturação</h3>
-                        <p>Cuidados iniciais e exercícios com a bolinha</p>
-                    </div>
-                    <div class="module-icon">›</div>
-                </div>
-
-                <div class="module-card" onclick="openTopic('diarios')">
-                    <div class="module-info">
-                        <h3>2. Autocuidado Domiciliar Diário</h3>
-                        <p>Higiene, frêmito e rotina preventiva</p>
-                    </div>
-                    <div class="module-icon">›</div>
-                </div>
-
-                <div class="module-card" onclick="openTopic('proibido')">
-                    <h3>3. O que NUNCA fazer no braço da FAV</h3>
-                    <p>Prevenção de punções e compressões indevidas</p>
-                </div>
-                <div class="module-icon">›</div>
-
-                <div class="module-card" onclick="openTopic('alertas')">
-                    <div class="module-info">
-                        <h3>4. Sinais de Al
